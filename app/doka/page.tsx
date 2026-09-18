@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { IconArrowRight, IconDownload, IconWifiOff } from '@tabler/icons-react'
+import { IconArrowRight, IconBrandApple, IconBrandWindows, IconDownload, IconWifiOff } from '@tabler/icons-react'
 import { Container, GhostButton, LeafButton } from '@/components/ui'
 import { Reveal } from '@/components/motion'
 import { Pricing } from '@/components/Pricing'
 import { fetchPricing } from '@/lib/pricing'
+import { fetchLatestRelease } from '@/lib/release'
 import { APP_URL, DOWNLOAD_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
@@ -47,7 +48,7 @@ const FAQS: [string, string][] = [
 ]
 
 export default async function DokaPage() {
-  const plans = await fetchPricing()
+  const [plans, release] = await Promise.all([fetchPricing(), fetchLatestRelease()])
   return (
     <div data-product="doka">
       <section className="pt-10 pb-10 sm:pt-16">
@@ -61,7 +62,7 @@ export default async function DokaPage() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <LeafButton href={APP_URL} size="lg">Create your shop <IconArrowRight size={18} /></LeafButton>
-                <GhostButton href={DOWNLOAD_URL} size="lg"><IconDownload size={18} /> Download the till</GhostButton>
+                <GhostButton href="#download" size="lg"><IconDownload size={18} /> Download the till</GhostButton>
               </div>
             </div>
           </Reveal>
@@ -124,6 +125,33 @@ export default async function DokaPage() {
                 </div>
               ))}
             </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      <section id="download" className="pb-20 sm:pb-28">
+        <Container>
+          <Reveal>
+            <div className="rule-strong pt-8">
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Download the till</p>
+              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">For the shop computer.</h2>
+              <p className="mt-3 max-w-[560px] text-[16px] text-muted">
+                {release.version ? `Version ${release.version}. ` : ''}Install once; it updates itself. You&apos;ll need an activation code from your dashboard the first time.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              {release.installers.length === 0 ? (
+                <a href={release.page} className="surface surface-hover p-6 block"><p className="text-[17px] font-extrabold text-forest">All downloads</p><p className="mt-1 text-[14px] text-muted">Windows and Mac installers on the releases page.</p></a>
+              ) : release.installers.map((i) => (
+                <a key={i.label} href={i.url} className="surface surface-hover p-6 block">
+                  <span className="grid h-11 w-11 place-items-center rounded-2xl bg-mint-soft text-action">{i.label.startsWith('Windows') ? <IconBrandWindows size={22} /> : <IconBrandApple size={22} />}</span>
+                  <p className="mt-4 text-[17px] font-extrabold tracking-[-0.01em] text-forest">{i.label}</p>
+                  <p className="mt-1 text-[14px] text-muted">{i.note}{i.size ? ` · ${i.size}` : ''}</p>
+                  <p className="mt-3 inline-flex items-center gap-1.5 text-[14px] font-bold text-action"><IconDownload size={16} /> Download</p>
+                </a>
+              ))}
+            </div>
+            <p className="mt-4 text-[13px] text-muted">On a Mac the first time: right-click the app → Open → Open. After that it opens normally.</p>
           </Reveal>
         </Container>
       </section>
