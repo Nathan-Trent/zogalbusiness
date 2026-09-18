@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { IconArrowRight, IconBrandApple, IconBrandWindows, IconDownload, IconWifiOff } from '@tabler/icons-react'
 import { Container, GhostButton, LeafButton } from '@/components/ui'
-import { Reveal } from '@/components/motion'
+import { Reveal, Stem } from '@/components/motion'
 import { Pricing } from '@/components/Pricing'
 import { fetchPricing } from '@/lib/pricing'
 import { fetchLatestRelease } from '@/lib/release'
@@ -57,7 +57,7 @@ export default async function DokaPage() {
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <p className="flex items-center gap-3 text-[12px] font-bold uppercase tracking-[0.16em] text-muted"><span className="stamp text-action">Product 01</span> by Zogal</p>
+                <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-muted">by Zogal</p>
                 <h1 className="mt-5 text-[64px] font-extrabold leading-[0.95] tracking-[-0.04em] text-forest sm:text-[96px] lg:text-[128px]">Doka</h1>
                 <p className="mt-3 max-w-[560px] text-[22px] font-semibold leading-snug tracking-[-0.01em] text-forest sm:text-[28px]">The shop app that knows your profit.</p>
               </div>
@@ -115,18 +115,14 @@ export default async function DokaPage() {
 
       <section className="pb-20 sm:pb-28">
         <Container>
-          <Reveal>
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Getting started</p>
-            <div className="mt-8 grid gap-6 sm:grid-cols-4">
-              {STEPS.map(([t, b], i) => (
-                <div key={t} className="relative border-t-2 border-action pt-5">
-                  <span className="tabular text-[13px] font-extrabold text-action">0{i + 1}</span>
-                  <h3 className="mt-1 text-[18px] font-extrabold tracking-[-0.01em] text-forest">{t}</h3>
-                  <p className="mt-1 text-[14px] leading-relaxed text-muted">{b}</p>
-                </div>
-              ))}
-            </div>
-          </Reveal>
+          <div className="grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
+            <Reveal>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Getting started</p>
+              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">An afternoon to set up. A minute to sell.</h2>
+              <p className="mt-4 max-w-[380px] text-[16px] leading-relaxed text-muted">No accountant, no training day. If you can use a phone, you can run Doka.</p>
+            </Reveal>
+            <Stem steps={STEPS.map(([title, body]) => ({ title, body }))} />
+          </div>
         </Container>
       </section>
 
@@ -184,11 +180,11 @@ export default async function DokaPage() {
 
 /** Doka in a desktop window: item grid on the left, the sale on the right — the real layout. */
 function TillWindow() {
-  const items = [['Peak Milk 400g', '₦1,800', '24'], ['Indomie Chicken', '₦250', '186'], ['Golden Penny Semo 1kg', '₦1,400', '9'], ['Dangote Sugar 1kg', '₦1,650', '31'], ['Milo 400g', '₦2,900', '12'], ['Titus Sardine', '₦1,100', '58'], ['Ariel 1kg', '₦2,400', '7'], ['Coke 50cl', '₦350', '96']]
-  const cart = [['Peak Milk 400g', '2', '₦3,600'], ['Indomie Chicken', '10', '₦2,500'], ['Golden Penny Semo 1kg', '1', '₦1,400']]
+  const items = [['Full cream milk 400g', '₦1,800', '24'], ['Noodles (chicken)', '₦250', '186'], ['Semolina 1kg', '₦1,400', '9'], ['Sugar 1kg', '₦1,650', '31'], ['Cocoa drink 400g', '₦2,900', '12'], ['Sardines', '₦1,100', '58'], ['Detergent 1kg', '₦2,400', '7'], ['Soft drink 50cl', '₦350', '96']]
+  const cart = [['Full cream milk 400g', '2', '₦3,600'], ['Noodles (chicken)', '10', '₦2,500'], ['Semolina 1kg', '1', '₦1,400']]
   return (
     <div className="window">
-      <div className="window-bar"><i /><i /><i /><span className="ml-3 text-[12px] font-semibold text-muted">Doka — Nathan Shop · Front counter</span><span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-mint-soft px-2.5 py-1 text-[11px] font-bold text-action"><IconWifiOff size={12} /> Offline — 3 sales waiting to upload</span></div>
+      <div className="window-bar"><i /><i /><i /><span className="ml-3 text-[12px] font-semibold text-muted">Doka — Sunrise Provisions · Front counter</span><span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-mint-soft px-2.5 py-1 text-[11px] font-bold text-action"><IconWifiOff size={12} /> Offline — 3 sales waiting to upload</span></div>
       <div className="grid md:grid-cols-[1fr_320px]">
         <div className="p-5">
           <div className="mb-4 h-10 rounded-xl border border-hair bg-ground px-3 text-[13px] leading-10 text-muted">Scan a barcode or search…</div>

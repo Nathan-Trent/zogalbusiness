@@ -133,7 +133,7 @@ export default function BusinessHome() {
 function DayBook() {
   const rows: [string, string, string][] = [
     ['08:12', 'Opening stock counted', '412 units'],
-    ['09:40', 'Delivery · Peak Milk 400g × 48', '₦86,400'],
+    ['09:40', 'Delivery · full cream milk × 48', '₦86,400'],
     ['12:05', 'Sales so far · 31 receipts', '₦118,300'],
     ['15:30', 'Expense · generator diesel', '₦9,000'],
     ['18:55', 'Closing · takings', '₦184,500'],

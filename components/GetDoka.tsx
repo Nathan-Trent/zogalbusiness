@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { IconBrandApple, IconBrandWindows, IconDownload } from '@tabler/icons-react'
 import type { Installer } from '@/lib/release'
+import { GhostButton, LeafButton } from '@/components/ui'
 
 /**
  * "Get Doka" — detects the visitor's computer and puts that download first.
@@ -37,15 +38,13 @@ export function GetDoka({ installers, version, page }: { installers: Installer[]
   const primary = os === 'windows' ? win : os.startsWith('mac') ? mac : null
   const secondary = os === 'windows' ? mac : os.startsWith('mac') ? win : null
 
-  const Btn = ({ i, big, kind }: { i: Installer; big?: boolean; kind: 'windows' | 'mac' }) => (
-    <a href={i.url} className={`leaf-btn inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] font-semibold ${big ? 'h-[56px] px-8 text-[15px] bg-action text-white shadow-[0_8px_24px_rgba(224,86,63,0.3)]' : 'h-[50px] px-6 text-[14px] text-forest border border-hair bg-white/60 hover:bg-white'}`}>
-      {kind === 'windows' ? <IconBrandWindows size={18} /> : <IconBrandApple size={18} />}
-      Download for {kind === 'windows' ? 'Windows' : 'Mac'}
-    </a>
-  )
+  const Btn = ({ i, big, kind }: { i: Installer; big?: boolean; kind: 'windows' | 'mac' }) => {
+    const label = <>{kind === 'windows' ? <IconBrandWindows size={18} /> : <IconBrandApple size={18} />} Download for {kind === 'windows' ? 'Windows' : 'Mac'}</>
+    return big ? <LeafButton href={i.url} size="lg">{label}</LeafButton> : <GhostButton href={i.url} size="lg">{label}</GhostButton>
+  }
 
   if (installers.length === 0) {
-    return <a href={page} className="inline-flex h-[56px] items-center gap-2 rounded-[var(--radius-pill)] bg-action px-8 text-[15px] font-semibold text-white"><IconDownload size={18} /> Get Doka</a>
+    return <LeafButton href={page} size="lg"><IconDownload size={18} /> Get Doka</LeafButton>
   }
 
   return (
