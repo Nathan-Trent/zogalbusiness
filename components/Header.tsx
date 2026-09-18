@@ -1,22 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { IconMenu2, IconX } from '@tabler/icons-react'
 import { LeafButton, Wordmark } from './ui'
 import { APP_URL, NAV } from '@/lib/site'
 
 export function Header() {
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 8)
-    on()
-    window.addEventListener('scroll', on, { passive: true })
-    return () => window.removeEventListener('scroll', on)
-  }, [])
   return (
-    <header className={`sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-300 ${scrolled ? 'bg-ground/85 backdrop-blur-md border-b border-hair' : 'bg-transparent border-b border-transparent'}`}>
+    <header className={`sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-300 bg-ground/90 backdrop-blur-md border-b border-hair`}>
       <div className="mx-auto flex h-[64px] w-full max-w-[1120px] items-center justify-between px-5 sm:px-8">
         <Link href="/" aria-label="Zogal Business home" onClick={() => setOpen(false)}>
           <Wordmark />

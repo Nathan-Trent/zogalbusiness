@@ -1,112 +1,126 @@
 import Link from 'next/link'
-import { IconArrowRight, IconBuildingStore, IconReceipt, IconWifiOff, IconCamera } from '@tabler/icons-react'
-import { Leaf } from '@/components/Leaf'
-import { Container, Eyebrow, GhostButton, LeafButton } from '@/components/ui'
-import { Branch, Flourish, LeafField, Reveal, TiltCard, WordPullUp } from '@/components/motion'
+import { IconArrowRight, IconArrowUpRight } from '@tabler/icons-react'
+import { Container, GhostButton, LeafButton } from '@/components/ui'
+import { Reveal } from '@/components/motion'
 import { APP_URL } from '@/lib/site'
 
 /**
- * business.getzogal.com — the Zogal Business sub-brand, in the getzogal.com
- * design: light ground, white surfaces, forest bands, the leaf. What it is,
- * and the products under it. Today: Doka. A product card goes to its page,
- * never straight to the app.
+ * business.getzogal.com — Zogal Business.
+ *
+ * Not getzogal's page in different clothes. getzogal is a soft, leafy,
+ * phone-in-hand page; this one is a PROSPECTUS: an ink hero that reads like
+ * the cover of a ledger, a numbered product index, a manifesto in
+ * numerals, and a ruled day-book as the only illustration. The leaf lives
+ * in the header button and nowhere else here.
  */
 export default function BusinessHome() {
   return (
     <>
-      <section className="relative overflow-hidden pt-6 pb-16 sm:pt-10 sm:pb-24">
-        <Container>
-          <div className="grid items-center gap-12 md:grid-cols-[1.1fr_0.9fr]">
-            <div className="md:-mt-6">
-              <Reveal><Eyebrow>Zogal Business</Eyebrow></Reveal>
-              <WordPullUp text="Run the business on facts." className="mt-4 text-[44px] font-extrabold leading-[1.02] tracking-[-0.03em] text-forest sm:text-[64px] lg:text-[76px]" />
-              <Reveal delay={0.35}>
-                <p className="mt-6 max-w-[520px] text-[18px] leading-relaxed text-muted sm:text-[20px]">
-                  Software for Nigerian businesses that would rather know than guess: what sold, what it cost, what is left, and what is owed. Built in Lagos for the way trade actually works here.
-                </p>
+      {/* Cover: ink, full-bleed, first — the reverse of getzogal's light hero. */}
+      <section className="band">
+        <Container className="relative">
+          <div className="grid gap-12 py-20 sm:py-28 md:grid-cols-[1fr_minmax(320px,420px)] md:items-end">
+            <div>
+              <Reveal>
+                <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">Zogal Business · est. Lagos</p>
+                <h1 className="mt-6 text-[48px] font-extrabold leading-[0.98] tracking-[-0.035em] sm:text-[72px] lg:text-[96px]">
+                  Run the<br />business<br />on <span className="text-signal">facts.</span>
+                </h1>
               </Reveal>
-              <Reveal delay={0.5}>
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <LeafButton href="/doka" size="lg">Meet Doka <IconArrowRight size={18} /></LeafButton>
-                  <GhostButton href="#products" size="lg">Our products</GhostButton>
+              <Reveal delay={0.2}>
+                <p className="mt-8 max-w-[480px] text-[18px] leading-relaxed text-white/70 sm:text-[20px]">Software for Nigerian businesses that would rather know than guess: what sold, what it cost, what is left, what is owed.</p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <LeafButton href="/doka" size="lg" tone="white">See Doka <IconArrowRight size={18} /></LeafButton>
+                  <GhostButton href="#products" size="lg" tone="white">Product index</GhostButton>
                 </div>
               </Reveal>
             </div>
-            <Reveal delay={0.25}><Composition /></Reveal>
+            <Reveal delay={0.3}><DayBook /></Reveal>
           </div>
         </Container>
       </section>
 
-      <section id="products" className="py-8 sm:py-12">
+      {/* Product index: a numbered list, like a contents page. Each product carries its own colour. */}
+      <section id="products" className="py-20 sm:py-28">
         <Container>
-          <Reveal>
-            <Eyebrow>Products</Eyebrow>
-            <h2 className="mt-3 max-w-[640px] text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] text-forest sm:text-[46px]">One product. Finished properly.</h2>
-            <p className="mt-4 max-w-[520px] text-[17px] leading-relaxed text-muted">We ship one tool a business uses every single day before we start the next.</p>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Link href="/doka" className="mt-10 block">
-              <TiltCard strength={5} lift className="surface surface-hover leaf-card p-7 sm:p-10">
-                <span className="leaf-rest lg"><Leaf size={220} /></span>
-                <div className="relative grid items-center gap-8 md:grid-cols-[auto_1fr_auto]">
-                  <span className="grid h-14 w-14 place-items-center rounded-2xl bg-mint-soft text-action"><IconBuildingStore size={28} /></span>
-                  <div>
-                    <p className="flex items-baseline gap-2"><span className="text-[28px] font-extrabold tracking-[-0.02em] text-forest">Doka</span><span className="text-[14px] font-semibold text-muted">by Zogal</span></p>
-                    <p className="mt-2 max-w-[560px] text-[16px] leading-relaxed text-muted">Point of sale, stock and true profit for retail shops. A till that keeps working when the network doesn&apos;t, and a dashboard that shows the owner real numbers from anywhere.</p>
+          <div className="grid gap-10 md:grid-cols-[260px_1fr]">
+            <Reveal>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Product index</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-muted">One product a business uses every single day, finished before the next begins. Each one has its own name and its own colour under the Zogal Business mark.</p>
+            </Reveal>
+            <div>
+              <Reveal>
+                <Link href="/doka" data-product="doka" className="rule-strong group block py-8">
+                  <div className="grid gap-4 sm:grid-cols-[72px_1fr_auto] sm:items-start">
+                    <span className="tabular text-[14px] font-extrabold text-muted">01</span>
+                    <div>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="text-[36px] font-extrabold leading-none tracking-[-0.03em] text-forest sm:text-[48px]">Doka</span>
+                        <span className="stamp text-action">Retail</span>
+                      </div>
+                      <p className="mt-3 max-w-[560px] text-[17px] leading-relaxed text-muted">Point of sale, stock and true profit for shops. A till that keeps selling when the network doesn&apos;t; a dashboard that shows the owner real numbers from anywhere.</p>
+                      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[13px] font-semibold text-forest/70">
+                        <span>Windows &amp; Mac till</span><span>Owner dashboard</span><span>Works offline</span><span>Tax already counted</span>
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-[15px] font-bold text-action transition-transform group-hover:translate-x-1">Open <IconArrowUpRight size={18} /></span>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 text-[15px] font-bold text-action">Learn more <IconArrowRight size={18} /></span>
+                </Link>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <div className="rule py-8 opacity-60">
+                  <div className="grid gap-4 sm:grid-cols-[72px_1fr]">
+                    <span className="tabular text-[14px] font-extrabold text-muted">02</span>
+                    <div>
+                      <span className="text-[28px] font-extrabold leading-none tracking-[-0.03em] text-forest/50">Next</span>
+                      <p className="mt-2 max-w-[560px] text-[15px] leading-relaxed text-muted">Announced when Doka is in enough shops to teach us what to build second.</p>
+                    </div>
+                  </div>
                 </div>
-              </TiltCard>
-            </Link>
-          </Reveal>
+              </Reveal>
+            </div>
+          </div>
         </Container>
       </section>
 
+      {/* Manifesto: numerals and rules, no cards. */}
       <section className="py-20 sm:py-28">
         <Container>
-          <div className="relative">
-            <Branch />
-            <div className="relative grid gap-4 sm:grid-cols-3">
-              {[
-                { Icon: IconWifiOff, t: 'Works without the network', b: 'A till that stops when the data finishes is not a till. Doka keeps selling and reconciles later.' },
-                { Icon: IconReceipt, t: 'True profit, not a guess', b: 'Every sale knows exactly what that stock cost. Profit is a figure, not a feeling.' },
-                { Icon: IconCamera, t: 'Meets people where they are', b: 'Barcodes if you have them. A photo of the notebook page if you don’t.' },
-              ].map((x, i) => (
-                <Reveal key={x.t} delay={i * 0.08}>
-                  <div className="surface surface-hover leaf-card h-full p-6">
-                    <span className={`leaf-rest ${i === 1 ? 'at-tr' : ''}`}><Leaf size={128} /></span>
-                    <span className="relative grid h-11 w-11 place-items-center rounded-2xl bg-mint-soft text-action"><x.Icon size={22} /></span>
-                    <h3 className="relative mt-4 text-[17px] font-extrabold tracking-[-0.01em] text-forest">{x.t}</h3>
-                    <p className="relative mt-1.5 text-[15px] leading-relaxed text-muted">{x.b}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+          <Reveal>
+            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">How we build</p>
+            <h2 className="mt-3 max-w-[720px] text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[52px]">Most Nigerian businesses run on a notebook and a memory. We record the truth as it happens.</h2>
+          </Reveal>
+          <div className="mt-14 grid gap-x-12 md:grid-cols-3">
+            {[
+              ['Nothing is overwritten.', 'Every sale, price change and correction is kept, with who did it and when. Mistakes are corrected on top, never rubbed out.'],
+              ['It must work with no network.', 'A tool that stops when the data finishes is not a tool. Ours keep working and reconcile when the connection returns.'],
+              ['The owner sees the real figure.', 'Profit after what the stock cost and what the business spent — not takings dressed up as profit.'],
+            ].map(([t, b], i) => (
+              <Reveal key={t} delay={i * 0.08}>
+                <div className="rule py-7">
+                  <span className="tabular text-[48px] font-extrabold leading-none tracking-[-0.04em] text-action">0{i + 1}</span>
+                  <h3 className="mt-4 text-[20px] font-extrabold tracking-[-0.01em] text-forest">{t}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-muted">{b}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </Container>
       </section>
 
-      <section className="band py-20 sm:py-28">
-        <LeafField><Leaf size={520} tone="white" /></LeafField>
-        <Container className="relative">
-          <Reveal>
-            <Eyebrow tone="white">Why we built this</Eyebrow>
-            <h2 className="mt-3 max-w-[680px] text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[46px]">Most Nigerian businesses run on a notebook and a memory.</h2>
-            <p className="mt-6 max-w-[600px] text-[17px] leading-relaxed text-white/75">Sales go in a book. Stock is whatever is on the shelf. Profit is what&apos;s left at the end of the month — if anything is. When it&apos;s time to file, the numbers have to be invented from memory.</p>
-            <p className="mt-4 max-w-[600px] text-[17px] leading-relaxed text-white/75">Zogal Business builds tools that record the truth as it happens — every unit bought, every naira sold, every expense — so the owner sees real profit any day, and the figures for the tax office are already there.</p>
-          </Reveal>
-        </Container>
-      </section>
-
-      <section className="py-24 sm:py-32">
+      {/* Sign-off: a short ruled block, not a centred flourish. */}
+      <section className="pb-8">
         <Container>
-          <Reveal className="text-center">
-            <h2 className="mx-auto max-w-[760px] text-[40px] font-extrabold leading-[1.04] tracking-[-0.03em] text-forest sm:text-[60px]">Know. Don&apos;t guess.</h2>
-            <Flourish />
-            <p className="mx-auto mt-2 max-w-[520px] text-[18px] leading-relaxed text-muted">Doka is the first Zogal Business product. Others will follow, each one finished before the next begins.</p>
-            <div className="mt-8 flex justify-center gap-3">
-              <LeafButton href="/doka" size="lg">Meet Doka <IconArrowRight size={18} /></LeafButton>
-              <GhostButton href={APP_URL} size="lg">Sign in</GhostButton>
+          <Reveal>
+            <div className="rule-strong grid gap-6 py-10 md:grid-cols-[1fr_auto] md:items-center">
+              <div>
+                <h2 className="text-[30px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[40px]">Know. Don&apos;t guess.</h2>
+                <p className="mt-2 max-w-[520px] text-[16px] text-muted">Doka is live. Create a shop in a minute; install the till when you&apos;re ready.</p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <LeafButton href="/doka">See Doka <IconArrowRight size={18} /></LeafButton>
+                <GhostButton href={APP_URL}>Sign in</GhostButton>
+              </div>
             </div>
           </Reveal>
         </Container>
@@ -115,28 +129,31 @@ export default function BusinessHome() {
   )
 }
 
-/** Three tiles, stacked and tilted — the business system at a glance. */
-function Composition() {
+/** The day-book: a ruled ledger of one shop's day. The only picture on the page. */
+function DayBook() {
+  const rows: [string, string, string][] = [
+    ['08:12', 'Opening stock counted', '412 units'],
+    ['09:40', 'Delivery · Peak Milk 400g × 48', '₦86,400'],
+    ['12:05', 'Sales so far · 31 receipts', '₦118,300'],
+    ['15:30', 'Expense · generator diesel', '₦9,000'],
+    ['18:55', 'Closing · takings', '₦184,500'],
+    ['', 'Profit after cost & expenses', '₦41,200'],
+  ]
   return (
-    <div className="relative mx-auto h-[300px] w-full max-w-[400px] select-none" aria-hidden>
-      <TiltCard strength={10} lift baseRotate={-6} className="absolute left-2 top-10 w-[62%] rounded-2xl bg-white p-5 shadow-[var(--shadow-surface-hover)] ring-1 ring-hair">
-        <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-muted">Takings today</p>
-        <p className="tabular mt-2 text-[28px] font-extrabold text-forest">₦184,500</p>
-        <div className="mt-3 h-2 w-full rounded bg-mint-soft"><div className="h-2 w-[68%] rounded bg-action" /></div>
-      </TiltCard>
-      <TiltCard strength={10} lift baseRotate={5} className="absolute right-0 top-0 w-[58%] rounded-2xl bg-forest p-5 text-white shadow-[var(--shadow-surface-hover)]">
-        <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-signal">Sale</p>
-        <ul className="mt-2 grid gap-1.5 text-[13px]">
-          <li className="flex justify-between gap-3"><span>Peak Milk ×2</span><span className="tabular text-white/70">₦3,600</span></li>
-          <li className="flex justify-between gap-3"><span>Indomie ×10</span><span className="tabular text-white/70">₦2,500</span></li>
-          <li className="flex justify-between gap-3"><span>Total</span><span className="tabular text-signal">₦6,100</span></li>
-        </ul>
-      </TiltCard>
-      <TiltCard strength={10} lift baseRotate={-2} className="absolute bottom-0 right-8 w-[60%] rounded-2xl bg-white p-5 shadow-[var(--shadow-surface-hover)] ring-1 ring-hair">
-        <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-muted">Gross profit</p>
-        <p className="tabular mt-2 text-[22px] font-extrabold text-forest">₦41,200</p>
-        <p className="mt-1 text-[12px] text-muted">after what the stock cost</p>
-      </TiltCard>
+    <div className="rounded-[18px] border border-white/15 bg-white/[0.04] p-6 text-white backdrop-blur-[2px]">
+      <div className="flex items-center justify-between">
+        <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/50">Day book</span>
+        <span className="stamp text-signal">Balanced</span>
+      </div>
+      <div className="mt-4">
+        {rows.map(([t, d, v], i) => (
+          <div key={i} className={`ledger-row ${i === rows.length - 1 ? 'border-t-2 border-white/40' : 'border-white/10'}`}>
+            <span className="tabular text-[12px] text-white/45">{t}</span>
+            <span className={`text-[14px] ${i === rows.length - 1 ? 'font-extrabold' : 'text-white/85'}`}>{d}</span>
+            <span className={`tabular text-[14px] font-extrabold ${i === rows.length - 1 ? 'text-signal' : ''}`}>{v}</span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

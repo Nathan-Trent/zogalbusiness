@@ -267,3 +267,45 @@ body {
     transition: none;
   }
 }
+
+/* ============================================================
+   Zogal Business — its own bones, not getzogal's.
+   The leaf stays in the header button only. The ornament here is
+   the RULE: a hairline like a ledger's, and the stamp.
+   ============================================================ */
+.rule { border-top: 1px solid var(--color-hair); }
+.rule-strong { border-top: 2px solid var(--color-forest); }
+.stamp {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1.5px solid currentColor; border-radius: 6px; padding: 4px 10px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+.ledger-row { display: grid; grid-template-columns: 64px 1fr auto; gap: 16px; align-items: baseline; padding: 12px 0; border-top: 1px solid var(--color-hair); }
+.ledger-row:first-child { border-top: none; }
+@keyframes ledger-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.ledger-row { animation: ledger-in 0.5s ease both; }
+.ledger-row:nth-child(1) { animation-delay: 0.2s } .ledger-row:nth-child(2) { animation-delay: 0.35s }
+.ledger-row:nth-child(3) { animation-delay: 0.5s } .ledger-row:nth-child(4) { animation-delay: 0.65s }
+.ledger-row:nth-child(5) { animation-delay: 0.8s } .ledger-row:nth-child(6) { animation-delay: 0.95s }
+
+/* Per-product accent. Each product under Zogal Business gets its own colour;
+   the page wrapper carries it and every token-driven utility follows.
+   Doka: coral — the colour of a market receipt. */
+[data-product='doka'] {
+  --color-action: #e0563f;
+  --color-signal: #ffb4a3;
+  --color-mint: #f8cfc6;
+  --color-mint-soft: #fdece8;
+  --color-lime: #ffd6cc;
+  --color-teal: #8a2c1a;
+}
+[data-product='doka'] .leaf-btn.bg-action { background: #e0563f; }
+[data-product='doka'] .leaf-btn.bg-action:hover { background: #c94a35; }
+
+/* Desktop window frame — the till is a computer, not a phone. */
+.window { border-radius: 14px; background: #fff; border: 1px solid var(--color-hair); box-shadow: var(--shadow-phone); overflow: hidden; }
+.window-bar { display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; background: #f3f0e8; border-bottom: 1px solid var(--color-hair); }
+.window-bar i { width: 10px; height: 10px; border-radius: 50%; background: #d9d4c7; display: inline-block; }
+.spec { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 22px 0; border-top: 1px solid var(--color-hair); }
+@media (max-width: 640px) { .spec { grid-template-columns: 1fr; gap: 6px; } .ledger-row { grid-template-columns: 52px 1fr auto; } }

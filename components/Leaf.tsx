@@ -13,9 +13,9 @@ export function Leaf({ size = 24, className, tone = 'ribbon' }: { size?: number;
       {tone === 'ribbon' ? (
         <defs>
           <linearGradient id={id} x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0" stopColor="#8B4F0C" />
-            <stop offset="0.45" stopColor="#D98E1E" />
-            <stop offset="1" stopColor="#FFE08A" />
+            <stop offset="0" stopColor="var(--color-teal)" />
+            <stop offset="0.45" stopColor="var(--color-action)" />
+            <stop offset="1" stopColor="var(--color-lime)" />
           </linearGradient>
         </defs>
       ) : null}

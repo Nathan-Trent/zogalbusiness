@@ -1,90 +1,93 @@
 import type { Metadata } from 'next'
-import { IconArrowRight, IconBarcode, IconCamera, IconChartBar, IconDeviceDesktop, IconDownload, IconPackage, IconReceipt, IconShieldCheck, IconWifiOff } from '@tabler/icons-react'
-import { Leaf } from '@/components/Leaf'
-import { Container, Eyebrow, GhostButton, LeafButton } from '@/components/ui'
-import { Branch, Flourish, HeroPhone, LeafField, Reveal, Stem, TiltCard, WordPullUp } from '@/components/motion'
-import { Accordion } from '@/components/Accordion'
+import { IconArrowRight, IconDownload, IconWifiOff } from '@tabler/icons-react'
+import { Container, GhostButton, LeafButton } from '@/components/ui'
+import { Reveal } from '@/components/motion'
 import { Pricing } from '@/components/Pricing'
 import { fetchPricing } from '@/lib/pricing'
 import { APP_URL, DOWNLOAD_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Doka — sales, stock and true profit for your shop',
-  description: 'A till that works offline, stock that knows its cost, and a dashboard that shows the owner real profit from anywhere. Doka by Zogal.',
+  title: 'Doka — the till that knows your profit',
+  description: 'Point of sale, stock control and a ledger in one. Works offline. Doka by Zogal.',
 }
 
 /** Pricing is edited in the Doka back office; this page re-reads it every minute. */
 export const revalidate = 60
 
-const FEATURES = [
-  { Icon: IconWifiOff, t: 'Works offline', b: 'Sales queue on the shop computer and upload when the network returns. The till never stops.' },
-  { Icon: IconPackage, t: 'Stock that knows its cost', b: 'Every delivery is its own batch at its own price. Old stock keeps its cost; profit per sale is exact.' },
-  { Icon: IconReceipt, t: 'True profit', b: 'Selling price minus what that unit cost you, minus expenses. Today, this month, any period.' },
-  { Icon: IconBarcode, t: 'Barcodes', b: 'Scan what has a barcode. Print one for what doesn’t. One tap for the rest.' },
-  { Icon: IconCamera, t: 'Notebook photos', b: 'Still writing sales by hand? Photograph the page — Doka reads it into rows you confirm.' },
-  { Icon: IconDeviceDesktop, t: 'Owner dashboard', b: 'Takings, profit, stock, staff and terminals from your phone, anywhere.' },
-  { Icon: IconShieldCheck, t: 'Staff and permissions', b: 'Cashiers sell. Managers restock. Only the owner sees cost prices. Every override is logged.' },
-  { Icon: IconChartBar, t: 'Tax, already counted', b: 'VAT and income-tax status update as you sell. When you file, the figures are there.' },
+/**
+ * The Doka page — a PRODUCT SHEET, not the sub-brand's prospectus and not a
+ * phone-tilt landing. Coral is Doka's own colour (data-product="doka").
+ * Structure: name plate → the till, full width, in a desktop window →
+ * "at the counter / on your phone" split → specification list → a four-
+ * step timeline → pricing on paper (not a dark band) → questions.
+ */
+const SPEC: [string, string][] = [
+  ['Selling', 'Scan a barcode or tap an item. Price may go above the suggested price, never below the floor you set. Optional customer on any sale.'],
+  ['Stock', 'Every delivery is a batch at its own cost. Old stock keeps its cost; the sale takes the oldest first. Two-step restock: quantity and cost, then your new selling price with the margin shown.'],
+  ['Profit', 'Selling price minus what that exact unit cost, minus expenses. Today, yesterday, this month, any range.'],
+  ['Offline', 'The till runs from what it last downloaded. Sales queue on the computer and upload when the network returns; stock and today’s figures update locally meanwhile.'],
+  ['Staff', 'Owner, manager, salesperson — or roles you define from a fixed list. Cashiers never see cost prices. Overrides need a manager PIN and are logged.'],
+  ['Notebook photos', 'Still writing sales by hand? Photograph the page. Doka reads it into rows you check before anything is recorded.'],
+  ['Tax', 'VAT and income-tax status update as you sell. Mark a period filed with the FIRS reference; the period locks and later entries become amendments.'],
+  ['Terminals', 'Activate each shop computer with a one-time code from the dashboard. See which are online. Installed apps update themselves.'],
 ]
 
-const STEPS = [
-  { title: 'Install the till on the shop computer', body: 'Windows or Mac. Activate it with a code from your dashboard. It updates itself.' },
-  { title: 'Add your items and what they cost', body: 'Or scan the barcodes. Set a floor price nobody can sell below.' },
-  { title: 'Sell', body: 'Scan or tap, take the money, done. With or without network.' },
-  { title: 'Open your phone', body: 'Takings, profit after cost and expenses, what’s running low, who sold what — any day, any month.' },
+const STEPS: [string, string][] = [
+  ['Create the shop', 'A minute on your phone. No card.'],
+  ['Install the till', 'Windows or Mac. One activation code.'],
+  ['Add items and cost', 'Or scan the barcodes.'],
+  ['Sell', 'Everything else follows.'],
 ]
 
-const FAQS = [
-  { q: 'Does it work without internet?', a: 'Yes. The till keeps selling from what it last downloaded; sales queue on the computer and upload when the connection returns. Stock and today’s figures update locally in the meantime.' },
-  { q: 'What do I need?', a: 'A Windows or Mac computer at the counter and any phone for the dashboard. A barcode scanner is optional.' },
-  { q: 'Can my staff see cost prices?', a: 'Only if you let them. Cashiers see selling prices and stock; cost, profit and reports are for the owner and whoever you choose.' },
-  { q: 'Is my data safe?', a: 'Each shop is completely separate. Nothing is ever overwritten — every sale, price change and correction is kept with who did it and when.' },
+const FAQS: [string, string][] = [
+  ['Does it work without internet?', 'Yes. Sales queue on the computer and upload when the connection returns. Stock and today’s figures keep updating locally.'],
+  ['What do I need?', 'A Windows or Mac computer at the counter, any phone for the dashboard. A barcode scanner is optional.'],
+  ['Can staff see cost prices?', 'Only if you allow it. Cashiers see selling prices and stock; cost, profit and reports are the owner’s.'],
+  ['Is my data mine?', 'Yes. Each shop is separate, nothing is ever overwritten, and every change is kept with who made it.'],
 ]
 
 export default async function DokaPage() {
   const plans = await fetchPricing()
   return (
-    <>
-      <section className="relative overflow-hidden pt-6 pb-20 sm:pt-10 sm:pb-28">
+    <div data-product="doka">
+      <section className="pt-10 pb-10 sm:pt-16">
         <Container>
-          <div className="grid items-center gap-12 md:grid-cols-[1.1fr_0.9fr]">
-            <div className="md:-mt-10">
-              <Reveal><Eyebrow>Doka by Zogal</Eyebrow></Reveal>
-              <WordPullUp text="The till that knows your profit." className="mt-4 text-[40px] font-extrabold leading-[1.02] tracking-[-0.03em] text-forest sm:text-[58px] lg:text-[66px]" />
-              <Reveal delay={0.35}>
-                <p className="mt-6 max-w-[520px] text-[18px] leading-relaxed text-muted sm:text-[20px]">Point of sale, stock control and a ledger in one. Sell at the counter, restock at cost, and see real profit on your phone — even when the network is off.</p>
-              </Reveal>
-              <Reveal delay={0.5}>
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <LeafButton href={APP_URL} size="lg">Create your shop <IconArrowRight size={18} /></LeafButton>
-                  <GhostButton href={DOWNLOAD_URL} size="lg"><IconDownload size={18} /> Download the till</GhostButton>
-                </div>
-                <p className="mt-4 text-[13px] text-muted">Free to start. Set up in an afternoon. No card needed.</p>
-              </Reveal>
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <p className="flex items-center gap-3 text-[12px] font-bold uppercase tracking-[0.16em] text-muted"><span className="stamp text-action">Product 01</span> by Zogal</p>
+                <h1 className="mt-5 text-[64px] font-extrabold leading-[0.95] tracking-[-0.04em] text-forest sm:text-[96px] lg:text-[128px]">Doka</h1>
+                <p className="mt-3 max-w-[560px] text-[22px] font-semibold leading-snug tracking-[-0.01em] text-forest sm:text-[28px]">The till that knows your profit.</p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <LeafButton href={APP_URL} size="lg">Create your shop <IconArrowRight size={18} /></LeafButton>
+                <GhostButton href={DOWNLOAD_URL} size="lg"><IconDownload size={18} /> Download the till</GhostButton>
+              </div>
             </div>
-            <Reveal delay={0.25} className="mx-auto w-full max-w-[420px]">
-              <HeroPhone><TillMock /></HeroPhone>
-            </Reveal>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
-      <section className="pb-8">
+      <section className="pb-20 sm:pb-28">
         <Container>
-          <div className="relative">
-            <Branch />
-            <div className="relative grid gap-4 sm:grid-cols-3">
-              {FEATURES.slice(0, 3).map((f, i) => (
-                <Reveal key={f.t} delay={i * 0.08}>
-                  <div className="surface surface-hover leaf-card h-full p-6">
-                    <span className={`leaf-rest ${i === 1 ? 'at-tr' : ''}`}><Leaf size={128} /></span>
-                    <span className="relative grid h-11 w-11 place-items-center rounded-2xl bg-mint-soft text-action"><f.Icon size={22} /></span>
-                    <h3 className="relative mt-4 text-[17px] font-extrabold tracking-[-0.01em] text-forest">{f.t}</h3>
-                    <p className="relative mt-1.5 text-[15px] leading-relaxed text-muted">{f.b}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+          <Reveal delay={0.15}><TillWindow /></Reveal>
+          <p className="mt-4 text-[13px] text-muted">The Doka till on the shop computer. Free to start · set up in an afternoon · no card needed.</p>
+        </Container>
+      </section>
+
+      <section className="band py-20 sm:py-24">
+        <Container className="relative">
+          <div className="grid gap-12 md:grid-cols-2">
+            <Reveal>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">At the counter</p>
+              <h2 className="mt-3 text-[32px] font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-[44px]">Scan. Tap. Take the money.</h2>
+              <p className="mt-4 max-w-[440px] text-[17px] leading-relaxed text-white/70">Nothing on the screen a cashier doesn&apos;t need. Prices can&apos;t go below your floor. The network can go; the till doesn&apos;t.</p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">On your phone</p>
+              <h2 className="mt-3 text-[32px] font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-[44px]">Takings, profit, stock — any day.</h2>
+              <p className="mt-4 max-w-[440px] text-[17px] leading-relaxed text-white/70">Profit after what the stock cost and what you spent. Who sold what, on which terminal. What&apos;s running low. What the tax office will ask for.</p>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -92,93 +95,109 @@ export default async function DokaPage() {
       <section className="py-20 sm:py-28">
         <Container>
           <Reveal>
-            <Eyebrow>Everything the shop needs</Eyebrow>
-            <h2 className="mt-3 max-w-[640px] text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] text-forest sm:text-[46px]">Built for the counter, not the boardroom.</h2>
+            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Specification</p>
+            <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">What it does, in full.</h2>
           </Reveal>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURES.slice(3).map((f, i) => (
-              <Reveal key={f.t} delay={i * 0.06}>
-                <TiltCard strength={5} className="surface surface-hover leaf-card h-full p-6">
-                  <span className={`leaf-rest ${i % 2 ? 'at-tr' : ''}`}><Leaf size={128} /></span>
-                  <span className="relative grid h-11 w-11 place-items-center rounded-2xl bg-mint-soft text-action"><f.Icon size={22} /></span>
-                  <h3 className="relative mt-4 text-[17px] font-extrabold tracking-[-0.01em] text-forest">{f.t}</h3>
-                  <p className="relative mt-1.5 text-[15px] leading-relaxed text-muted">{f.b}</p>
-                </TiltCard>
+          <div className="mt-10">
+            {SPEC.map(([k, v], i) => (
+              <Reveal key={k} delay={Math.min(i * 0.04, 0.2)}>
+                <div className="spec">
+                  <span className="text-[16px] font-extrabold tracking-[-0.01em] text-forest">{k}</span>
+                  <p className="text-[16px] leading-relaxed text-muted">{v}</p>
+                </div>
               </Reveal>
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="py-20 sm:py-28">
+      <section className="pb-20 sm:pb-28">
         <Container>
-          <div className="grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
-            <Reveal>
-              <Eyebrow>How it works</Eyebrow>
-              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] text-forest sm:text-[46px]">An afternoon to set up. A minute to sell.</h2>
-              <p className="mt-4 max-w-[380px] text-[17px] leading-relaxed text-muted">No accountant, no training day. If you can use a phone, you can run Doka.</p>
-            </Reveal>
-            <Stem steps={STEPS} />
-          </div>
-        </Container>
-      </section>
-
-      <section id="pricing" className="band py-20 sm:py-28">
-        <LeafField><Leaf size={520} tone="white" /></LeafField>
-        <Container className="relative">
           <Reveal>
-            <Eyebrow tone="white">Pricing</Eyebrow>
-            <h2 className="mt-3 max-w-[640px] text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[46px]">Priced for a shop, not a corporation.</h2>
-            <p className="mt-4 text-[16px] text-white/70">Per shop, per month. Change or cancel any time.</p>
-          </Reveal>
-          <div className="mt-12"><Pricing plans={plans} onDark /></div>
-        </Container>
-      </section>
-
-      <section className="py-20 sm:py-28">
-        <Container>
-          <div className="grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
-            <Reveal>
-              <Eyebrow>Questions</Eyebrow>
-              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] text-forest sm:text-[46px]">Before you start</h2>
-            </Reveal>
-            <Reveal delay={0.1}><Accordion items={FAQS} /></Reveal>
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-24 sm:py-32">
-        <Container>
-          <Reveal className="text-center">
-            <h2 className="mx-auto max-w-[760px] text-[40px] font-extrabold leading-[1.04] tracking-[-0.03em] text-forest sm:text-[60px]">Stop guessing what the shop made.</h2>
-            <Flourish />
-            <p className="mx-auto mt-2 max-w-[520px] text-[18px] leading-relaxed text-muted">Create your shop in a minute. Install the till when you&apos;re ready.</p>
-            <div className="mt-8 flex justify-center"><LeafButton href={APP_URL} size="lg">Start with Doka <IconArrowRight size={18} /></LeafButton></div>
+            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Getting started</p>
+            <div className="mt-8 grid gap-6 sm:grid-cols-4">
+              {STEPS.map(([t, b], i) => (
+                <div key={t} className="relative border-t-2 border-action pt-5">
+                  <span className="tabular text-[13px] font-extrabold text-action">0{i + 1}</span>
+                  <h3 className="mt-1 text-[18px] font-extrabold tracking-[-0.01em] text-forest">{t}</h3>
+                  <p className="mt-1 text-[14px] leading-relaxed text-muted">{b}</p>
+                </div>
+              ))}
+            </div>
           </Reveal>
         </Container>
       </section>
-    </>
+
+      <section id="pricing" className="py-20 sm:py-28">
+        <Container>
+          <Reveal>
+            <div className="rule-strong pt-8">
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Pricing</p>
+              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">Per shop, per month.</h2>
+              <p className="mt-3 text-[16px] text-muted">Change or cancel any time. Prices are set by Zogal and shown here as they stand.</p>
+            </div>
+          </Reveal>
+          <div className="mt-10"><Pricing plans={plans} onDark={false} /></div>
+        </Container>
+      </section>
+
+      <section className="pb-24 sm:pb-32">
+        <Container>
+          <Reveal>
+            <div className="rule-strong pt-8">
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Questions</p>
+            </div>
+            <dl className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-2">
+              {FAQS.map(([q, a]) => (
+                <div key={q} className="rule pt-5">
+                  <dt className="text-[17px] font-extrabold tracking-[-0.01em] text-forest">{q}</dt>
+                  <dd className="mt-2 text-[15px] leading-relaxed text-muted">{a}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-14 flex flex-wrap items-center gap-3">
+              <LeafButton href={APP_URL} size="lg">Start with Doka <IconArrowRight size={18} /></LeafButton>
+              <span className="text-[14px] text-muted">or <a href={DOWNLOAD_URL} className="font-semibold text-forest underline">download the till</a> first</span>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+    </div>
   )
 }
 
-/** A still of the till, on the surface level — the product's own solid card. */
-function TillMock() {
-  const rows = [['Peak Milk 400g', '2 × ₦1,800', '₦3,600'], ['Indomie Chicken', '10 × ₦250', '₦2,500'], ['Golden Penny Semo 1kg', '1 × ₦1,400', '₦1,400']]
+/** The till in a desktop window: item grid on the left, the sale on the right — the real layout. */
+function TillWindow() {
+  const items = [['Peak Milk 400g', '₦1,800', '24'], ['Indomie Chicken', '₦250', '186'], ['Golden Penny Semo 1kg', '₦1,400', '9'], ['Dangote Sugar 1kg', '₦1,650', '31'], ['Milo 400g', '₦2,900', '12'], ['Titus Sardine', '₦1,100', '58'], ['Ariel 1kg', '₦2,400', '7'], ['Coke 50cl', '₦350', '96']]
+  const cart = [['Peak Milk 400g', '2', '₦3,600'], ['Indomie Chicken', '10', '₦2,500'], ['Golden Penny Semo 1kg', '1', '₦1,400']]
   return (
-    <div className="surface p-6 text-[14px]">
-      <div className="mb-4 flex items-center justify-between">
-        <span className="font-extrabold text-forest">Sale</span>
-        <span className="rounded-full bg-mint-soft px-2.5 py-1 text-[11px] font-bold text-action">● Offline — saved locally</span>
-      </div>
-      {rows.map(([n, q, t]) => (
-        <div key={n} className="grid grid-cols-[1fr_auto_auto] gap-3 border-t border-hair py-2.5">
-          <span className="font-semibold text-forest">{n}</span><span className="text-muted">{q}</span><span className="tabular font-extrabold text-forest">{t}</span>
+    <div className="window">
+      <div className="window-bar"><i /><i /><i /><span className="ml-3 text-[12px] font-semibold text-muted">Doka — Nathan Shop · Front counter</span><span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-mint-soft px-2.5 py-1 text-[11px] font-bold text-action"><IconWifiOff size={12} /> Offline — 3 sales waiting to upload</span></div>
+      <div className="grid md:grid-cols-[1fr_320px]">
+        <div className="p-5">
+          <div className="mb-4 h-10 rounded-xl border border-hair bg-ground px-3 text-[13px] leading-10 text-muted">Scan a barcode or search…</div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {items.map(([n, p, s]) => (
+              <div key={n} className="rounded-xl border border-hair p-3">
+                <p className="truncate text-[13px] font-semibold text-forest">{n}</p>
+                <p className="tabular mt-1 text-[16px] font-extrabold text-forest">{p}</p>
+                <p className="text-[11px] text-muted">{s} in stock</p>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-      <div className="mt-4 flex items-baseline justify-between border-t border-hair pt-4">
-        <span className="text-muted">Total</span><span className="tabular text-[28px] font-extrabold tracking-[-0.02em] text-forest">₦7,500</span>
+        <div className="border-t border-hair bg-ground p-5 md:border-l md:border-t-0">
+          <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-muted">Sale</p>
+          <div className="mt-3 rounded-xl border border-hair bg-white px-3 py-2 text-[12px] text-muted">Customer · <span className="font-semibold text-forest">Walk-in</span></div>
+          <div className="mt-3">
+            {cart.map(([n, q, t]) => (
+              <div key={n} className="grid grid-cols-[1fr_auto_auto] gap-3 border-t border-hair py-2 text-[13px]"><span className="font-semibold text-forest">{n}</span><span className="text-muted">×{q}</span><span className="tabular font-extrabold text-forest">{t}</span></div>
+            ))}
+          </div>
+          <div className="mt-4 flex items-baseline justify-between border-t-2 border-forest pt-3"><span className="text-[13px] text-muted">Total</span><span className="tabular text-[26px] font-extrabold tracking-[-0.02em] text-forest">₦7,500</span></div>
+          <div className="mt-4 rounded-xl bg-action py-3 text-center text-[14px] font-bold text-white">Record sale</div>
+        </div>
       </div>
-      <div className="mt-4 rounded-2xl bg-action py-3 text-center font-bold text-white shadow-[0_8px_24px_rgba(217,142,30,0.3)]">Record sale</div>
     </div>
   )
 }
