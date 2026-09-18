@@ -19,7 +19,7 @@ export function Pricing({ plans, onDark = true }: { plans: PricingPlan[]; onDark
     return (
       <TiltCard strength={5} lift className={`${card} max-w-[520px]`}>
         <h3 className={`text-[26px] font-extrabold tracking-[-0.02em] ${title}`}>Free to start</h3>
-        <p className={`mt-2 text-[16px] leading-relaxed ${muted}`}>Create your shop and set up the till today. Plans are being finalised — <a href={`mailto:${CONTACT_EMAIL}`} className="underline">ask us</a>.</p>
+        <p className={`mt-2 text-[16px] leading-relaxed ${muted}`}>Create your shop and install Doka today. Plans are being finalised — <a href={`mailto:${CONTACT_EMAIL}`} className="underline">ask us</a>.</p>
         <div className="mt-6"><LeafButton href={APP_URL} tone={onDark ? 'white' : 'green'}>Create your shop <IconArrowRight size={18} /></LeafButton></div>
       </TiltCard>
     )

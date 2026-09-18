@@ -22,7 +22,7 @@ export function Footer() {
             <ul className="mt-4 grid gap-2.5 text-[15px] text-white/80">
               <li><Link href="/doka" className="hover:text-white">Doka</Link></li>
               <li><a href={APP_URL} className="hover:text-white">Sign in to Doka</a></li>
-              <li><a href={DOWNLOAD_URL} className="hover:text-white">Download the till</a></li>
+              <li><a href={DOWNLOAD_URL} className="hover:text-white">Get Doka for your computer</a></li>
             </ul>
           </div>
           <div>

@@ -5,10 +5,11 @@ import { Reveal } from '@/components/motion'
 import { Pricing } from '@/components/Pricing'
 import { fetchPricing } from '@/lib/pricing'
 import { fetchLatestRelease } from '@/lib/release'
-import { APP_URL, DOWNLOAD_URL } from '@/lib/site'
+import { GetDoka } from '@/components/GetDoka'
+import { APP_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Doka — the till that knows your profit',
+  title: 'Doka — the shop app that knows your profit',
   description: 'Point of sale, stock control and a ledger in one. Works offline. Doka by Zogal.',
 }
 
@@ -26,7 +27,7 @@ const SPEC: [string, string][] = [
   ['Selling', 'Scan a barcode or tap an item. Price may go above the suggested price, never below the floor you set. Optional customer on any sale.'],
   ['Stock', 'Every delivery is a batch at its own cost. Old stock keeps its cost; the sale takes the oldest first. Two-step restock: quantity and cost, then your new selling price with the margin shown.'],
   ['Profit', 'Selling price minus what that exact unit cost, minus expenses. Today, yesterday, this month, any range.'],
-  ['Offline', 'The till runs from what it last downloaded. Sales queue on the computer and upload when the network returns; stock and today’s figures update locally meanwhile.'],
+  ['Offline', 'Doka runs from what it last downloaded. Sales queue on the computer and upload when the network returns; stock and today’s figures update locally meanwhile.'],
   ['Staff', 'Owner, manager, salesperson — or roles you define from a fixed list. Cashiers never see cost prices. Overrides need a manager PIN and are logged.'],
   ['Notebook photos', 'Still writing sales by hand? Photograph the page. Doka reads it into rows you check before anything is recorded.'],
   ['Tax', 'VAT and income-tax status update as you sell. Mark a period filed with the FIRS reference; the period locks and later entries become amendments.'],
@@ -35,7 +36,7 @@ const SPEC: [string, string][] = [
 
 const STEPS: [string, string][] = [
   ['Create the shop', 'A minute on your phone. No card.'],
-  ['Install the till', 'Windows or Mac. One activation code.'],
+  ['Get Doka on the shop computer', 'Windows or Mac. One activation code.'],
   ['Add items and cost', 'Or scan the barcodes.'],
   ['Sell', 'Everything else follows.'],
 ]
@@ -58,11 +59,11 @@ export default async function DokaPage() {
               <div>
                 <p className="flex items-center gap-3 text-[12px] font-bold uppercase tracking-[0.16em] text-muted"><span className="stamp text-action">Product 01</span> by Zogal</p>
                 <h1 className="mt-5 text-[64px] font-extrabold leading-[0.95] tracking-[-0.04em] text-forest sm:text-[96px] lg:text-[128px]">Doka</h1>
-                <p className="mt-3 max-w-[560px] text-[22px] font-semibold leading-snug tracking-[-0.01em] text-forest sm:text-[28px]">The till that knows your profit.</p>
+                <p className="mt-3 max-w-[560px] text-[22px] font-semibold leading-snug tracking-[-0.01em] text-forest sm:text-[28px]">The shop app that knows your profit.</p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <LeafButton href={APP_URL} size="lg">Create your shop <IconArrowRight size={18} /></LeafButton>
-                <GhostButton href="#download" size="lg"><IconDownload size={18} /> Download the till</GhostButton>
+                <GhostButton href="#download" size="lg"><IconDownload size={18} /> Get Doka</GhostButton>
               </div>
             </div>
           </Reveal>
@@ -72,7 +73,7 @@ export default async function DokaPage() {
       <section className="pb-20 sm:pb-28">
         <Container>
           <Reveal delay={0.15}><TillWindow /></Reveal>
-          <p className="mt-4 text-[13px] text-muted">The Doka till on the shop computer. Free to start · set up in an afternoon · no card needed.</p>
+          <p className="mt-4 text-[13px] text-muted">Doka on the shop computer. Free to start · set up in an afternoon · no card needed.</p>
         </Container>
       </section>
 
@@ -82,7 +83,7 @@ export default async function DokaPage() {
             <Reveal>
               <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">At the counter</p>
               <h2 className="mt-3 text-[32px] font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-[44px]">Scan. Tap. Take the money.</h2>
-              <p className="mt-4 max-w-[440px] text-[17px] leading-relaxed text-white/70">Nothing on the screen a cashier doesn&apos;t need. Prices can&apos;t go below your floor. The network can go; the till doesn&apos;t.</p>
+              <p className="mt-4 max-w-[440px] text-[17px] leading-relaxed text-white/70">Nothing on the screen a cashier doesn&apos;t need. Prices can&apos;t go below your floor. The network can go; Doka keeps selling.</p>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">On your phone</p>
@@ -133,25 +134,12 @@ export default async function DokaPage() {
         <Container>
           <Reveal>
             <div className="rule-strong pt-8">
-              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Download the till</p>
-              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">For the shop computer.</h2>
-              <p className="mt-3 max-w-[560px] text-[16px] text-muted">
-                {release.version ? `Version ${release.version}. ` : ''}Install once; it updates itself. You&apos;ll need an activation code from your dashboard the first time.
-              </p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Get Doka</p>
+              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">Available for Windows and Mac.</h2>
+              <p className="mt-3 max-w-[560px] text-[16px] text-muted">Install Doka on the computer at the counter. You&apos;ll need an activation code from your dashboard the first time.</p>
             </div>
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              {release.installers.length === 0 ? (
-                <a href={release.page} className="surface surface-hover p-6 block"><p className="text-[17px] font-extrabold text-forest">All downloads</p><p className="mt-1 text-[14px] text-muted">Windows and Mac installers on the releases page.</p></a>
-              ) : release.installers.map((i) => (
-                <a key={i.label} href={i.url} className="surface surface-hover p-6 block">
-                  <span className="grid h-11 w-11 place-items-center rounded-2xl bg-mint-soft text-action">{i.label.startsWith('Windows') ? <IconBrandWindows size={22} /> : <IconBrandApple size={22} />}</span>
-                  <p className="mt-4 text-[17px] font-extrabold tracking-[-0.01em] text-forest">{i.label}</p>
-                  <p className="mt-1 text-[14px] text-muted">{i.note}{i.size ? ` · ${i.size}` : ''}</p>
-                  <p className="mt-3 inline-flex items-center gap-1.5 text-[14px] font-bold text-action"><IconDownload size={16} /> Download</p>
-                </a>
-              ))}
-            </div>
-            <p className="mt-4 text-[13px] text-muted">On a Mac the first time: right-click the app → Open → Open. After that it opens normally.</p>
+            <div className="mt-8"><GetDoka installers={release.installers} version={release.version} page={release.page} /></div>
+            <p className="mt-6 text-[13px] text-muted">On a Mac the first time: right-click Doka → Open → Open. After that it opens normally.</p>
           </Reveal>
         </Container>
       </section>
@@ -185,7 +173,7 @@ export default async function DokaPage() {
             </dl>
             <div className="mt-14 flex flex-wrap items-center gap-3">
               <LeafButton href={APP_URL} size="lg">Start with Doka <IconArrowRight size={18} /></LeafButton>
-              <span className="text-[14px] text-muted">or <a href={DOWNLOAD_URL} className="font-semibold text-forest underline">download the till</a> first</span>
+              <span className="text-[14px] text-muted">or <a href="#download" className="font-semibold text-forest underline">get Doka for your computer</a> first</span>
             </div>
           </Reveal>
         </Container>
@@ -194,7 +182,7 @@ export default async function DokaPage() {
   )
 }
 
-/** The till in a desktop window: item grid on the left, the sale on the right — the real layout. */
+/** Doka in a desktop window: item grid on the left, the sale on the right — the real layout. */
 function TillWindow() {
   const items = [['Peak Milk 400g', '₦1,800', '24'], ['Indomie Chicken', '₦250', '186'], ['Golden Penny Semo 1kg', '₦1,400', '9'], ['Dangote Sugar 1kg', '₦1,650', '31'], ['Milo 400g', '₦2,900', '12'], ['Titus Sardine', '₦1,100', '58'], ['Ariel 1kg', '₦2,400', '7'], ['Coke 50cl', '₦350', '96']]
   const cart = [['Peak Milk 400g', '2', '₦3,600'], ['Indomie Chicken', '10', '₦2,500'], ['Golden Penny Semo 1kg', '1', '₦1,400']]

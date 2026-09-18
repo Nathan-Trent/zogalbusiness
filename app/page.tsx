@@ -58,9 +58,9 @@ export default function BusinessHome() {
                         <span className="text-[36px] font-extrabold leading-none tracking-[-0.03em] text-forest sm:text-[48px]">Doka</span>
                         <span className="stamp text-action">Retail</span>
                       </div>
-                      <p className="mt-3 max-w-[560px] text-[17px] leading-relaxed text-muted">Point of sale, stock and true profit for shops. A till that keeps selling when the network doesn&apos;t; a dashboard that shows the owner real numbers from anywhere.</p>
+                      <p className="mt-3 max-w-[560px] text-[17px] leading-relaxed text-muted">Point of sale, stock and true profit for shops. Keeps selling when the network doesn&apos;t; a dashboard that shows the owner real numbers from anywhere.</p>
                       <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[13px] font-semibold text-forest/70">
-                        <span>Windows &amp; Mac till</span><span>Owner dashboard</span><span>Works offline</span><span>Tax already counted</span>
+                        <span>Windows &amp; Mac</span><span>Owner dashboard</span><span>Works offline</span><span>Tax already counted</span>
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-1 text-[15px] font-bold text-action transition-transform group-hover:translate-x-1">Open <IconArrowUpRight size={18} /></span>
@@ -115,7 +115,7 @@ export default function BusinessHome() {
             <div className="rule-strong grid gap-6 py-10 md:grid-cols-[1fr_auto] md:items-center">
               <div>
                 <h2 className="text-[30px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[40px]">Know. Don&apos;t guess.</h2>
-                <p className="mt-2 max-w-[520px] text-[16px] text-muted">Doka is live. Create a shop in a minute; install the till when you&apos;re ready.</p>
+                <p className="mt-2 max-w-[520px] text-[16px] text-muted">Doka is live. Create a shop in a minute; install Doka on the shop computer when you&apos;re ready.</p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <LeafButton href="/doka">See Doka <IconArrowRight size={18} /></LeafButton>

@@ -3,7 +3,7 @@
  * key). A new tag updates the download links by itself. Anything missing
  * falls back to the Releases page so the button is never dead.
  */
-export interface Installer { label: string; note: string; url: string; size: string | null }
+export interface Installer { key: 'windows' | 'mac-arm' | 'mac-intel'; label: string; note: string; url: string; size: string | null }
 
 const REPO = 'Nathan-Trent/jakodav2'
 const RELEASES = `https://github.com/${REPO}/releases/latest`
@@ -20,9 +20,9 @@ export async function fetchLatestRelease(): Promise<{ version: string; installer
     const arm = find((n) => n.endsWith('.dmg') && n.includes('aarch64'))
     const x64 = find((n) => n.endsWith('.dmg') && n.includes('x64'))
     const installers: Installer[] = []
-    if (win) installers.push({ label: 'Windows', note: 'Windows 10 or later, 64-bit', url: win.browser_download_url, size: mb(win.size) })
-    if (arm) installers.push({ label: 'Mac (Apple Silicon)', note: 'M1, M2, M3, M4', url: arm.browser_download_url, size: mb(arm.size) })
-    if (x64) installers.push({ label: 'Mac (Intel)', note: 'Intel-based Macs', url: x64.browser_download_url, size: mb(x64.size) })
+    if (win) installers.push({ key: 'windows', label: 'Windows', note: 'Windows 10 or later, 64-bit', url: win.browser_download_url, size: mb(win.size) })
+    if (arm) installers.push({ key: 'mac-arm', label: 'Mac (Apple Silicon)', note: 'M1, M2, M3, M4', url: arm.browser_download_url, size: mb(arm.size) })
+    if (x64) installers.push({ key: 'mac-intel', label: 'Mac (Intel)', note: 'Intel-based Macs', url: x64.browser_download_url, size: mb(x64.size) })
     return { version: rel.tag_name.replace(/^v/, ''), installers, page: rel.html_url }
   } catch {
     return empty
