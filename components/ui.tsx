@@ -17,7 +17,7 @@ const sizes = {
 type Tone = 'green' | 'white'
 
 export function LeafButton({ href, children, size = 'md', tone = 'green', className = '', track }: { href: string; children: ReactNode; size?: 'md' | 'lg'; tone?: Tone; className?: string; track?: string }) {
-  const colours = tone === 'green' ? 'bg-action text-white hover:bg-[#15963f] shadow-[0_8px_24px_rgba(22,163,74,0.28)]' : 'bg-white text-forest hover:bg-[#f2f7f4] shadow-[0_8px_24px_rgba(0,0,0,0.18)]'
+  const colours = tone === 'green' ? 'bg-action text-white hover:bg-[#c47f16] shadow-[0_8px_24px_rgba(217,142,30,0.3)]' : 'bg-white text-forest hover:bg-[#f7f2e7] shadow-[0_8px_24px_rgba(0,0,0,0.18)]'
   const external = /^https?:\/\//.test(href)
   const cls = `leaf-btn ${pill} ${sizes[size]} ${colours} ${className}`
   const inner = (

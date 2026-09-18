@@ -50,9 +50,9 @@ export default async function DokaPage() {
           <div className="grid items-center gap-12 md:grid-cols-[1.1fr_0.9fr]">
             <div className="md:-mt-10">
               <Reveal><Eyebrow>Doka by Zogal</Eyebrow></Reveal>
-              <WordPullUp text="Sell from the computer. See your real profit on your phone." className="mt-4 text-[40px] font-extrabold leading-[1.02] tracking-[-0.03em] text-forest sm:text-[58px] lg:text-[66px]" />
+              <WordPullUp text="The till that knows your profit." className="mt-4 text-[40px] font-extrabold leading-[1.02] tracking-[-0.03em] text-forest sm:text-[58px] lg:text-[66px]" />
               <Reveal delay={0.35}>
-                <p className="mt-6 max-w-[520px] text-[18px] leading-relaxed text-muted sm:text-[20px]">Doka is a till, a stock book and an accountant&apos;s ledger in one — for retail shops that want to know their numbers every day, even when the network is off.</p>
+                <p className="mt-6 max-w-[520px] text-[18px] leading-relaxed text-muted sm:text-[20px]">Point of sale, stock control and a ledger in one. Sell at the counter, restock at cost, and see real profit on your phone — even when the network is off.</p>
               </Reveal>
               <Reveal delay={0.5}>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -150,7 +150,7 @@ export default async function DokaPage() {
       <section className="py-24 sm:py-32">
         <Container>
           <Reveal className="text-center">
-            <h2 className="mx-auto max-w-[760px] text-[40px] font-extrabold leading-[1.04] tracking-[-0.03em] text-forest sm:text-[60px]">Know your numbers. Every day.</h2>
+            <h2 className="mx-auto max-w-[760px] text-[40px] font-extrabold leading-[1.04] tracking-[-0.03em] text-forest sm:text-[60px]">Stop guessing what the shop made.</h2>
             <Flourish />
             <p className="mx-auto mt-2 max-w-[520px] text-[18px] leading-relaxed text-muted">Create your shop in a minute. Install the till when you&apos;re ready.</p>
             <div className="mt-8 flex justify-center"><LeafButton href={APP_URL} size="lg">Start with Doka <IconArrowRight size={18} /></LeafButton></div>
@@ -178,7 +178,7 @@ function TillMock() {
       <div className="mt-4 flex items-baseline justify-between border-t border-hair pt-4">
         <span className="text-muted">Total</span><span className="tabular text-[28px] font-extrabold tracking-[-0.02em] text-forest">₦7,500</span>
       </div>
-      <div className="mt-4 rounded-2xl bg-action py-3 text-center font-bold text-white shadow-[0_8px_24px_rgba(22,163,74,0.28)]">Record sale</div>
+      <div className="mt-4 rounded-2xl bg-action py-3 text-center font-bold text-white shadow-[0_8px_24px_rgba(217,142,30,0.3)]">Record sale</div>
     </div>
   )
 }

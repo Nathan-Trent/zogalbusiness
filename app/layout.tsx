@@ -9,12 +9,12 @@ const manrope = Manrope({ subsets: ['latin'], weight: ['500', '600', '700', '800
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://business.getzogal.com'),
-  title: { default: 'Zogal Business — Know your numbers. Every day.', template: '%s · Zogal Business' },
-  description: 'Tools for Nigerian businesses that want to know their numbers. Starting with Doka: sales, stock and true profit for retail shops.',
+  title: { default: 'Zogal Business — Run the business on facts.', template: '%s · Zogal Business' },
+  description: 'Software for Nigerian businesses that would rather know than guess. Starting with Doka: point of sale, stock and true profit for retail shops.',
   openGraph: { type: 'website', siteName: 'Zogal Business', images: ['/brand/zogal-512.png'] },
   icons: { icon: '/brand/zogal-512.png' },
 }
-export const viewport: Viewport = { themeColor: '#062C1A' }
+export const viewport: Viewport = { themeColor: '#0E1B2B' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

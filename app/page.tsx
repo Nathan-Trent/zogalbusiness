@@ -19,10 +19,10 @@ export default function BusinessHome() {
           <div className="grid items-center gap-12 md:grid-cols-[1.1fr_0.9fr]">
             <div className="md:-mt-6">
               <Reveal><Eyebrow>Zogal Business</Eyebrow></Reveal>
-              <WordPullUp text="Know your numbers. Every day." className="mt-4 text-[44px] font-extrabold leading-[1.02] tracking-[-0.03em] text-forest sm:text-[64px] lg:text-[76px]" />
+              <WordPullUp text="Run the business on facts." className="mt-4 text-[44px] font-extrabold leading-[1.02] tracking-[-0.03em] text-forest sm:text-[64px] lg:text-[76px]" />
               <Reveal delay={0.35}>
                 <p className="mt-6 max-w-[520px] text-[18px] leading-relaxed text-muted sm:text-[20px]">
-                  Zogal helps people see their money coming. Zogal Business does the same for the businesses they run — starting with the shop on the corner.
+                  Software for Nigerian businesses that would rather know than guess: what sold, what it cost, what is left, and what is owed. Built in Lagos for the way trade actually works here.
                 </p>
               </Reveal>
               <Reveal delay={0.5}>
@@ -41,8 +41,8 @@ export default function BusinessHome() {
         <Container>
           <Reveal>
             <Eyebrow>Products</Eyebrow>
-            <h2 className="mt-3 max-w-[640px] text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] text-forest sm:text-[46px]">One so far. Built properly.</h2>
-            <p className="mt-4 max-w-[520px] text-[17px] leading-relaxed text-muted">We would rather ship one tool a shop owner uses every day than five they open once.</p>
+            <h2 className="mt-3 max-w-[640px] text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] text-forest sm:text-[46px]">One product. Finished properly.</h2>
+            <p className="mt-4 max-w-[520px] text-[17px] leading-relaxed text-muted">We ship one tool a business uses every single day before we start the next.</p>
           </Reveal>
           <Reveal delay={0.1}>
             <Link href="/doka" className="mt-10 block">
@@ -52,7 +52,7 @@ export default function BusinessHome() {
                   <span className="grid h-14 w-14 place-items-center rounded-2xl bg-mint-soft text-action"><IconBuildingStore size={28} /></span>
                   <div>
                     <p className="flex items-baseline gap-2"><span className="text-[28px] font-extrabold tracking-[-0.02em] text-forest">Doka</span><span className="text-[14px] font-semibold text-muted">by Zogal</span></p>
-                    <p className="mt-2 max-w-[560px] text-[16px] leading-relaxed text-muted">Sales, stock and true profit for retail shops. A till that keeps working when the network doesn&apos;t, and a dashboard that shows the owner the real numbers from anywhere.</p>
+                    <p className="mt-2 max-w-[560px] text-[16px] leading-relaxed text-muted">Point of sale, stock and true profit for retail shops. A till that keeps working when the network doesn&apos;t, and a dashboard that shows the owner real numbers from anywhere.</p>
                   </div>
                   <span className="inline-flex items-center gap-1.5 text-[15px] font-bold text-action">Learn more <IconArrowRight size={18} /></span>
                 </div>
@@ -68,8 +68,8 @@ export default function BusinessHome() {
             <Branch />
             <div className="relative grid gap-4 sm:grid-cols-3">
               {[
-                { Icon: IconWifiOff, t: 'Works without the network', b: 'A till that stops when the data finishes is not a till. Ours keeps selling and catches up later.' },
-                { Icon: IconReceipt, t: 'True profit, not a guess', b: 'Every sale knows exactly what that stock cost. Profit is a fact, not a feeling.' },
+                { Icon: IconWifiOff, t: 'Works without the network', b: 'A till that stops when the data finishes is not a till. Doka keeps selling and reconciles later.' },
+                { Icon: IconReceipt, t: 'True profit, not a guess', b: 'Every sale knows exactly what that stock cost. Profit is a figure, not a feeling.' },
                 { Icon: IconCamera, t: 'Meets people where they are', b: 'Barcodes if you have them. A photo of the notebook page if you don’t.' },
               ].map((x, i) => (
                 <Reveal key={x.t} delay={i * 0.08}>
@@ -90,10 +90,10 @@ export default function BusinessHome() {
         <LeafField><Leaf size={520} tone="white" /></LeafField>
         <Container className="relative">
           <Reveal>
-            <Eyebrow tone="white">Why business</Eyebrow>
-            <h2 className="mt-3 max-w-[680px] text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[46px]">Most small businesses in Nigeria run on a notebook and a feeling.</h2>
+            <Eyebrow tone="white">Why we built this</Eyebrow>
+            <h2 className="mt-3 max-w-[680px] text-[34px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[46px]">Most Nigerian businesses run on a notebook and a memory.</h2>
             <p className="mt-6 max-w-[600px] text-[17px] leading-relaxed text-white/75">Sales go in a book. Stock is whatever is on the shelf. Profit is what&apos;s left at the end of the month — if anything is. When it&apos;s time to file, the numbers have to be invented from memory.</p>
-            <p className="mt-4 max-w-[600px] text-[17px] leading-relaxed text-white/75">Zogal Business builds tools that record the truth as it happens — every unit bought, every naira sold, every expense — so the owner sees real profit any day, and the tax figures are already there.</p>
+            <p className="mt-4 max-w-[600px] text-[17px] leading-relaxed text-white/75">Zogal Business builds tools that record the truth as it happens — every unit bought, every naira sold, every expense — so the owner sees real profit any day, and the figures for the tax office are already there.</p>
           </Reveal>
         </Container>
       </section>
@@ -101,9 +101,9 @@ export default function BusinessHome() {
       <section className="py-24 sm:py-32">
         <Container>
           <Reveal className="text-center">
-            <h2 className="mx-auto max-w-[760px] text-[40px] font-extrabold leading-[1.04] tracking-[-0.03em] text-forest sm:text-[60px]">See it. Don&apos;t guess it.</h2>
+            <h2 className="mx-auto max-w-[760px] text-[40px] font-extrabold leading-[1.04] tracking-[-0.03em] text-forest sm:text-[60px]">Know. Don&apos;t guess.</h2>
             <Flourish />
-            <p className="mx-auto mt-2 max-w-[520px] text-[18px] leading-relaxed text-muted">The same idea as Zogal for your own money, applied to the business you run.</p>
+            <p className="mx-auto mt-2 max-w-[520px] text-[18px] leading-relaxed text-muted">Doka is the first Zogal Business product. Others will follow, each one finished before the next begins.</p>
             <div className="mt-8 flex justify-center gap-3">
               <LeafButton href="/doka" size="lg">Meet Doka <IconArrowRight size={18} /></LeafButton>
               <GhostButton href={APP_URL} size="lg">Sign in</GhostButton>

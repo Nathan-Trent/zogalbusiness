@@ -7,15 +7,15 @@ import { useId } from 'react'
 
 export function Leaf({ size = 24, className, tone = 'ribbon' }: { size?: number; className?: string; tone?: 'ribbon' | 'white' | 'ink' }) {
   const id = useId()
-  const fill = tone === 'ribbon' ? `url(#${id})` : tone === 'white' ? '#F8FAF9' : '#104E2F'
+  const fill = tone === 'ribbon' ? `url(#${id})` : tone === 'white' ? '#F8FAF9' : '#1B3350'
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true" className={className}>
       {tone === 'ribbon' ? (
         <defs>
           <linearGradient id={id} x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0" stopColor="#0F5E52" />
-            <stop offset="0.45" stopColor="#16A34A" />
-            <stop offset="1" stopColor="#C6F542" />
+            <stop offset="0" stopColor="#8B4F0C" />
+            <stop offset="0.45" stopColor="#D98E1E" />
+            <stop offset="1" stopColor="#FFE08A" />
           </linearGradient>
         </defs>
       ) : null}
@@ -23,7 +23,7 @@ export function Leaf({ size = 24, className, tone = 'ribbon' }: { size?: number;
           along the midrib so it catches light the way the Z does. */}
       <path d="M8 92 C 12 50, 40 18, 92 8 C 90 40, 74 76, 36 90 C 26 93, 16 94, 8 92 Z" fill={fill} />
       <path d="M8 92 C 30 72, 56 46, 92 8" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M36 90 C 44 70, 62 44, 92 8 C 78 30, 60 62, 36 90 Z" fill="rgba(6,44,26,0.18)" />
+      <path d="M36 90 C 44 70, 62 44, 92 8 C 78 30, 60 62, 36 90 Z" fill="rgba(14,27,43,0.18)" />
     </svg>
   )
 }

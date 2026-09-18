@@ -15,7 +15,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Wordmark tone="white" />
-            <p className="mt-4 max-w-[360px] text-[16px] leading-relaxed text-white/75">Tools for Nigerian businesses that want to know their numbers. From the people behind Zogal.</p>
+            <p className="mt-4 max-w-[360px] text-[16px] leading-relaxed text-white/75">Software for Nigerian businesses that would rather know than guess. A Zogal company.</p>
           </div>
           <div>
             <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-signal">Products</p>

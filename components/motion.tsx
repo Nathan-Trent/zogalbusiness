@@ -152,9 +152,9 @@ function LeafDot() {
     <svg width="32" height="32" viewBox="0 0 100 100" aria-hidden="true">
       <defs>
         <linearGradient id="stem-leaf" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0" stopColor="#0F5E52" />
-          <stop offset="0.45" stopColor="#16A34A" />
-          <stop offset="1" stopColor="#C6F542" />
+          <stop offset="0" stopColor="#8B4F0C" />
+          <stop offset="0.45" stopColor="#D98E1E" />
+          <stop offset="1" stopColor="#FFE08A" />
         </linearGradient>
       </defs>
       <path d="M8 92 C 12 50, 40 18, 92 8 C 90 40, 74 76, 36 90 C 26 93, 16 94, 8 92 Z" fill="url(#stem-leaf)" />
@@ -181,7 +181,7 @@ export function Branch({ direction = 'across' }: { direction?: 'across' | 'down'
         <svg className="h-full w-full" viewBox="0 0 1000 1000" preserveAspectRatio="none" fill="none">
           <motion.path
             d="M 120 -10 C 200 200, 800 250, 860 400 S 200 650, 140 800 S 700 950, 880 1010"
-            stroke="#16A34A"
+            stroke="#D98E1E"
             strokeOpacity="0.45"
             strokeWidth="3"
             strokeLinecap="round"
@@ -199,7 +199,7 @@ export function Branch({ direction = 'across' }: { direction?: 'across' | 'down'
       <svg className="hidden h-full w-full sm:block" viewBox="0 0 1000 200" preserveAspectRatio="none" fill="none">
         <motion.path
           d="M -20 150 C 150 60, 300 60, 500 110 S 850 170, 1020 60"
-          stroke="#16A34A"
+          stroke="#D98E1E"
           strokeOpacity="0.45"
           strokeWidth="3"
           strokeLinecap="round"
@@ -212,7 +212,7 @@ export function Branch({ direction = 'across' }: { direction?: 'across' | 'down'
       <svg className="h-full w-full sm:hidden" viewBox="0 0 100 1000" preserveAspectRatio="none" fill="none">
         <motion.path
           d="M 50 -10 C 30 250, 70 500, 50 750 S 40 950, 50 1010"
-          stroke="#16A34A"
+          stroke="#D98E1E"
           strokeOpacity="0.45"
           strokeWidth="3"
           strokeLinecap="round"
@@ -267,7 +267,7 @@ export function Flourish() {
       <svg viewBox="0 0 220 40" width="220" height="40" fill="none">
         <motion.path
           d="M 4 30 C 60 8, 120 8, 176 22"
-          stroke="#16A34A"
+          stroke="#D98E1E"
           strokeOpacity="0.7"
           strokeWidth="2.5"
           strokeLinecap="round"
@@ -284,9 +284,9 @@ export function Flourish() {
           <g transform="translate(172 2) scale(0.34)">
             <defs>
               <linearGradient id="flourish-leaf" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0" stopColor="#0F5E52" />
-                <stop offset="0.45" stopColor="#16A34A" />
-                <stop offset="1" stopColor="#C6F542" />
+                <stop offset="0" stopColor="#8B4F0C" />
+                <stop offset="0.45" stopColor="#D98E1E" />
+                <stop offset="1" stopColor="#FFE08A" />
               </linearGradient>
             </defs>
             <path d="M8 92 C 12 50, 40 18, 92 8 C 90 40, 74 76, 36 90 C 26 93, 16 94, 8 92 Z" fill="url(#flourish-leaf)" />
