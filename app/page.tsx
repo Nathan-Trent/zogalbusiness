@@ -3,6 +3,11 @@ import { IconArrowRight, IconArrowUpRight } from '@tabler/icons-react'
 import { Container, GhostButton, LeafButton } from '@/components/ui'
 import { Reveal } from '@/components/motion'
 import { APP_URL } from '@/lib/site'
+import { getContent, pairs, rows3, str, strs } from '@/lib/content'
+import { HOME } from '@/lib/content-schema'
+
+/** Copy is edited in the Zogal Business back office (Marketing); re-read every minute and on publish. */
+export const revalidate = 60
 
 /**
  * business.getzogal.com — Zogal Business.
@@ -13,7 +18,12 @@ import { APP_URL } from '@/lib/site'
  * numerals, and a ruled day-book as the only illustration. The leaf lives
  * in the header button and nowhere else here.
  */
-export default function BusinessHome() {
+export default async function BusinessHome() {
+  const c = await getContent(HOME)
+  const titleLines = str(c, 'hero.title').split('\n').filter(Boolean)
+  const lastLine = titleLines[titleLines.length - 1] ?? ''
+  const lastWord = lastLine.split(' ').pop() ?? ''
+  const lastHead = lastLine.slice(0, lastLine.length - lastWord.length)
   return (
     <>
       {/* Cover: ink, full-bleed, first — the reverse of getzogal's light hero. */}
@@ -22,20 +32,20 @@ export default function BusinessHome() {
           <div className="grid gap-12 py-20 sm:py-28 md:grid-cols-[1fr_minmax(320px,420px)] md:items-end">
             <div>
               <Reveal>
-                <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">Zogal Business · est. Lagos</p>
+                <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">{str(c, 'hero.eyebrow')}</p>
                 <h1 className="mt-6 text-[48px] font-extrabold leading-[0.98] tracking-[-0.035em] sm:text-[72px] lg:text-[96px]">
-                  Run the<br />business<br />on <span className="text-signal">facts.</span>
+                  {titleLines.slice(0, -1).map((l, i) => <span key={i}>{l}<br /></span>)}{lastHead}<span className="text-signal">{lastWord}</span>
                 </h1>
               </Reveal>
               <Reveal delay={0.2}>
-                <p className="mt-8 max-w-[480px] text-[18px] leading-relaxed text-white/70 sm:text-[20px]">Software for Nigerian businesses that would rather know than guess: what sold, what it cost, what is left, what is owed.</p>
+                <p className="mt-8 max-w-[480px] text-[18px] leading-relaxed text-white/70 sm:text-[20px]">{str(c, 'hero.body')}</p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <LeafButton href="/doka" size="lg" tone="white">See Doka <IconArrowRight size={18} /></LeafButton>
-                  <GhostButton href="#products" size="lg" tone="white">Product index</GhostButton>
+                  <LeafButton href="/doka" size="lg" tone="white">{str(c, 'hero.cta_primary')} <IconArrowRight size={18} /></LeafButton>
+                  <GhostButton href="#products" size="lg" tone="white">{str(c, 'hero.cta_secondary')}</GhostButton>
                 </div>
               </Reveal>
             </div>
-            <Reveal delay={0.3}><DayBook /></Reveal>
+            <Reveal delay={0.3}><DayBook rows={rows3(c, 'daybook.rows')} /></Reveal>
           </div>
         </Container>
       </section>
@@ -45,8 +55,8 @@ export default function BusinessHome() {
         <Container>
           <div className="grid gap-10 md:grid-cols-[260px_1fr]">
             <Reveal>
-              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Product index</p>
-              <p className="mt-3 text-[15px] leading-relaxed text-muted">One product a business uses every single day, finished before the next begins. Each one has its own name and its own colour under the Zogal Business mark.</p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">{str(c, 'index.eyebrow')}</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-muted">{str(c, 'index.body')}</p>
             </Reveal>
             <div>
               <Reveal>
@@ -56,11 +66,11 @@ export default function BusinessHome() {
                     <div>
                       <div className="flex flex-wrap items-center gap-3">
                         <span className="text-[36px] font-extrabold leading-none tracking-[-0.03em] text-forest sm:text-[48px]">Doka</span>
-                        <span className="stamp text-action">Retail</span>
+                        <span className="stamp text-action">{str(c, 'index.doka.stamp')}</span>
                       </div>
-                      <p className="mt-3 max-w-[560px] text-[17px] leading-relaxed text-muted">Point of sale, stock and true profit for shops. Keeps selling when the network doesn&apos;t; a dashboard that shows the owner real numbers from anywhere.</p>
+                      <p className="mt-3 max-w-[560px] text-[17px] leading-relaxed text-muted">{str(c, 'index.doka.body')}</p>
                       <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[13px] font-semibold text-forest/70">
-                        <span>Windows &amp; Mac</span><span>Owner dashboard</span><span>Works offline</span><span>Tax already counted</span>
+                        {strs(c, 'index.doka.tags').map((t) => <span key={t}>{t}</span>)}
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-1 text-[15px] font-bold text-action transition-transform group-hover:translate-x-1">Open <IconArrowUpRight size={18} /></span>
@@ -72,8 +82,8 @@ export default function BusinessHome() {
                   <div className="grid gap-4 sm:grid-cols-[72px_1fr]">
                     <span className="tabular text-[14px] font-extrabold text-muted">02</span>
                     <div>
-                      <span className="text-[28px] font-extrabold leading-none tracking-[-0.03em] text-forest/50">Next</span>
-                      <p className="mt-2 max-w-[560px] text-[15px] leading-relaxed text-muted">Announced when Doka is in enough shops to teach us what to build second.</p>
+                      <span className="text-[28px] font-extrabold leading-none tracking-[-0.03em] text-forest/50">{str(c, 'index.next.title')}</span>
+                      <p className="mt-2 max-w-[560px] text-[15px] leading-relaxed text-muted">{str(c, 'index.next.body')}</p>
                     </div>
                   </div>
                 </div>
@@ -87,15 +97,11 @@ export default function BusinessHome() {
       <section className="py-20 sm:py-28">
         <Container>
           <Reveal>
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">How we build</p>
-            <h2 className="mt-3 max-w-[720px] text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[52px]">Most Nigerian businesses run on a notebook and a memory. We record the truth as it happens.</h2>
+            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">{str(c, 'manifesto.eyebrow')}</p>
+            <h2 className="mt-3 max-w-[720px] text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[52px]">{str(c, 'manifesto.title')}</h2>
           </Reveal>
           <div className="mt-14 grid gap-x-12 md:grid-cols-3">
-            {[
-              ['Nothing is overwritten.', 'Every sale, price change and correction is kept, with who did it and when. Mistakes are corrected on top, never rubbed out.'],
-              ['It must work with no network.', 'A tool that stops when the data finishes is not a tool. Ours keep working and reconcile when the connection returns.'],
-              ['The owner sees the real figure.', 'Profit after what the stock cost and what the business spent — not takings dressed up as profit.'],
-            ].map(([t, b], i) => (
+            {pairs(c, 'manifesto.items').map(([t, b], i) => (
               <Reveal key={t} delay={i * 0.08}>
                 <div className="rule py-7">
                   <span className="tabular text-[48px] font-extrabold leading-none tracking-[-0.04em] text-action">0{i + 1}</span>
@@ -114,12 +120,12 @@ export default function BusinessHome() {
           <Reveal>
             <div className="rule-strong grid gap-6 py-10 md:grid-cols-[1fr_auto] md:items-center">
               <div>
-                <h2 className="text-[30px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[40px]">Know. Don&apos;t guess.</h2>
-                <p className="mt-2 max-w-[520px] text-[16px] text-muted">Doka is live. Create a shop in a minute; install Doka on the shop computer when you&apos;re ready.</p>
+                <h2 className="text-[30px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[40px]">{str(c, 'signoff.title')}</h2>
+                <p className="mt-2 max-w-[520px] text-[16px] text-muted">{str(c, 'signoff.body')}</p>
               </div>
               <div className="flex flex-wrap gap-3">
-                <LeafButton href="/doka">See Doka <IconArrowRight size={18} /></LeafButton>
-                <GhostButton href={APP_URL}>Sign in</GhostButton>
+                <LeafButton href="/doka">{str(c, 'signoff.cta_primary')} <IconArrowRight size={18} /></LeafButton>
+                <GhostButton href={APP_URL}>{str(c, 'signoff.cta_secondary')}</GhostButton>
               </div>
             </div>
           </Reveal>
@@ -130,15 +136,7 @@ export default function BusinessHome() {
 }
 
 /** The day-book: a ruled ledger of one shop's day. The only picture on the page. */
-function DayBook() {
-  const rows: [string, string, string][] = [
-    ['08:12', 'Opening stock counted', '412 units'],
-    ['09:40', 'Delivery · full cream milk × 48', '₦86,400'],
-    ['12:05', 'Sales so far · 31 receipts', '₦118,300'],
-    ['15:30', 'Expense · generator diesel', '₦9,000'],
-    ['18:55', 'Closing · takings', '₦184,500'],
-    ['', 'Profit after cost & expenses', '₦41,200'],
-  ]
+function DayBook({ rows }: { rows: [string, string, string][] }) {
   return (
     <div className="rounded-[18px] border border-white/15 bg-white/[0.04] p-6 text-white backdrop-blur-[2px]">
       <div className="flex items-center justify-between">

@@ -7,10 +7,13 @@ import { fetchPricing } from '@/lib/pricing'
 import { fetchLatestRelease } from '@/lib/release'
 import { GetDoka } from '@/components/GetDoka'
 import { APP_URL } from '@/lib/site'
+import { getContent, pairs, str } from '@/lib/content'
+import { DOKA } from '@/lib/content-schema'
+import { ContactForm } from '@/components/ContactForm'
 
-export const metadata: Metadata = {
-  title: 'Doka — the shop app that knows your profit',
-  description: 'Point of sale, stock control and a ledger in one. Works offline. Doka by Zogal.',
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getContent(DOKA)
+  return { title: str(c, 'meta.title'), description: str(c, 'meta.description') }
 }
 
 /** Pricing is edited in the Doka back office; this page re-reads it every minute. */
@@ -23,33 +26,8 @@ export const revalidate = 60
  * "at the counter / on your phone" split → specification list → a four-
  * step timeline → pricing on paper (not a dark band) → questions.
  */
-const SPEC: [string, string][] = [
-  ['Selling', 'Scan a barcode or tap an item. Price may go above the suggested price, never below the floor you set. Optional customer on any sale.'],
-  ['Stock', 'Every delivery is a batch at its own cost. Old stock keeps its cost; the sale takes the oldest first. Two-step restock: quantity and cost, then your new selling price with the margin shown.'],
-  ['Profit', 'Selling price minus what that exact unit cost, minus expenses. Today, yesterday, this month, any range.'],
-  ['Offline', 'Doka runs from what it last downloaded. Sales queue on the computer and upload when the network returns; stock and today’s figures update locally meanwhile.'],
-  ['Staff', 'Owner, manager, salesperson — or roles you define from a fixed list. Cashiers never see cost prices. Overrides need a manager PIN and are logged.'],
-  ['Notebook photos', 'Still writing sales by hand? Photograph the page. Doka reads it into rows you check before anything is recorded.'],
-  ['Tax', 'VAT and income-tax status update as you sell. Mark a period filed with the FIRS reference; the period locks and later entries become amendments.'],
-  ['Terminals', 'Activate each shop computer with a one-time code from the dashboard. See which are online. Installed apps update themselves.'],
-]
-
-const STEPS: [string, string][] = [
-  ['Create the shop', 'A minute on your phone. No card.'],
-  ['Get Doka on the shop computer', 'Windows or Mac. One activation code.'],
-  ['Add items and cost', 'Or scan the barcodes.'],
-  ['Sell', 'Everything else follows.'],
-]
-
-const FAQS: [string, string][] = [
-  ['Does it work without internet?', 'Yes. Sales queue on the computer and upload when the connection returns. Stock and today’s figures keep updating locally.'],
-  ['What do I need?', 'A Windows or Mac computer at the counter, any phone for the dashboard. A barcode scanner is optional.'],
-  ['Can staff see cost prices?', 'Only if you allow it. Cashiers see selling prices and stock; cost, profit and reports are the owner’s.'],
-  ['Is my data mine?', 'Yes. Each shop is separate, nothing is ever overwritten, and every change is kept with who made it.'],
-]
-
 export default async function DokaPage() {
-  const [plans, release] = await Promise.all([fetchPricing(), fetchLatestRelease()])
+  const [plans, release, c] = await Promise.all([fetchPricing(), fetchLatestRelease(), getContent(DOKA)])
   return (
     <div data-product="doka">
       <section className="pt-10 pb-10 sm:pt-16">
@@ -57,13 +35,13 @@ export default async function DokaPage() {
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-muted">by Zogal</p>
+                <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-muted">{str(c, 'head.eyebrow')}</p>
                 <h1 className="mt-5 text-[64px] font-extrabold leading-[0.95] tracking-[-0.04em] text-forest sm:text-[96px] lg:text-[128px]">Doka</h1>
-                <p className="mt-3 max-w-[560px] text-[22px] font-semibold leading-snug tracking-[-0.01em] text-forest sm:text-[28px]">The shop app that knows your profit.</p>
+                <p className="mt-3 max-w-[560px] text-[22px] font-semibold leading-snug tracking-[-0.01em] text-forest sm:text-[28px]">{str(c, 'head.tagline')}</p>
               </div>
               <div className="flex flex-wrap gap-3">
-                <LeafButton href={APP_URL} size="lg">Create your shop <IconArrowRight size={18} /></LeafButton>
-                <GhostButton href="#download" size="lg"><IconDownload size={18} /> Get Doka</GhostButton>
+                <LeafButton href={APP_URL} size="lg">{str(c, 'head.cta_primary')} <IconArrowRight size={18} /></LeafButton>
+                <GhostButton href="#download" size="lg"><IconDownload size={18} /> {str(c, 'head.cta_secondary')}</GhostButton>
               </div>
             </div>
           </Reveal>
@@ -73,7 +51,7 @@ export default async function DokaPage() {
       <section className="pb-20 sm:pb-28">
         <Container>
           <Reveal delay={0.15}><TillWindow /></Reveal>
-          <p className="mt-4 text-[13px] text-muted">Doka on the shop computer. Free to start · set up in an afternoon · no card needed.</p>
+          <p className="mt-4 text-[13px] text-muted">{str(c, 'till.caption')}</p>
         </Container>
       </section>
 
@@ -81,14 +59,14 @@ export default async function DokaPage() {
         <Container className="relative">
           <div className="grid gap-12 md:grid-cols-2">
             <Reveal>
-              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">At the counter</p>
-              <h2 className="mt-3 text-[32px] font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-[44px]">Scan. Tap. Take the money.</h2>
-              <p className="mt-4 max-w-[440px] text-[17px] leading-relaxed text-white/70">Nothing on the screen a cashier doesn&apos;t need. Prices can&apos;t go below your floor. The network can go; Doka keeps selling.</p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">{str(c, 'counter.eyebrow')}</p>
+              <h2 className="mt-3 text-[32px] font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-[44px]">{str(c, 'counter.title')}</h2>
+              <p className="mt-4 max-w-[440px] text-[17px] leading-relaxed text-white/70">{str(c, 'counter.body')}</p>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">On your phone</p>
-              <h2 className="mt-3 text-[32px] font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-[44px]">Takings, profit, stock — any day.</h2>
-              <p className="mt-4 max-w-[440px] text-[17px] leading-relaxed text-white/70">Profit after what the stock cost and what you spent. Who sold what, on which terminal. What&apos;s running low. What the tax office will ask for.</p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-signal">{str(c, 'phone.eyebrow')}</p>
+              <h2 className="mt-3 text-[32px] font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-[44px]">{str(c, 'phone.title')}</h2>
+              <p className="mt-4 max-w-[440px] text-[17px] leading-relaxed text-white/70">{str(c, 'phone.body')}</p>
             </Reveal>
           </div>
         </Container>
@@ -97,11 +75,11 @@ export default async function DokaPage() {
       <section className="py-20 sm:py-28">
         <Container>
           <Reveal>
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Specification</p>
-            <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">What it does, in full.</h2>
+            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">{str(c, 'spec.eyebrow')}</p>
+            <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">{str(c, 'spec.title')}</h2>
           </Reveal>
           <div className="mt-10">
-            {SPEC.map(([k, v], i) => (
+            {pairs(c, 'spec.items').map(([k, v], i) => (
               <Reveal key={k} delay={Math.min(i * 0.04, 0.2)}>
                 <div className="spec">
                   <span className="text-[16px] font-extrabold tracking-[-0.01em] text-forest">{k}</span>
@@ -117,11 +95,11 @@ export default async function DokaPage() {
         <Container>
           <div className="grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
             <Reveal>
-              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Getting started</p>
-              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">An afternoon to set up. A minute to sell.</h2>
-              <p className="mt-4 max-w-[380px] text-[16px] leading-relaxed text-muted">No accountant, no training day. If you can use a phone, you can run Doka.</p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">{str(c, 'start.eyebrow')}</p>
+              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">{str(c, 'start.title')}</h2>
+              <p className="mt-4 max-w-[380px] text-[16px] leading-relaxed text-muted">{str(c, 'start.body')}</p>
             </Reveal>
-            <Stem steps={STEPS.map(([title, body]) => ({ title, body }))} />
+            <Stem steps={pairs(c, 'start.steps').map(([title, body]) => ({ title, body }))} />
           </div>
         </Container>
       </section>
@@ -130,12 +108,12 @@ export default async function DokaPage() {
         <Container>
           <Reveal>
             <div className="rule-strong pt-8">
-              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Get Doka</p>
-              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">Available for Windows and Mac.</h2>
-              <p className="mt-3 max-w-[560px] text-[16px] text-muted">Install Doka on the computer at the counter. You&apos;ll need an activation code from your dashboard the first time.</p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">{str(c, 'download.eyebrow')}</p>
+              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">{str(c, 'download.title')}</h2>
+              <p className="mt-3 max-w-[560px] text-[16px] text-muted">{str(c, 'download.body')}</p>
             </div>
             <div className="mt-8"><GetDoka installers={release.installers} version={release.version} page={release.page} /></div>
-            <p className="mt-6 text-[13px] text-muted">On a Mac the first time: right-click Doka → Open → Open. After that it opens normally.</p>
+            <p className="mt-6 text-[13px] text-muted">{str(c, 'download.mac_note')}</p>
           </Reveal>
         </Container>
       </section>
@@ -144,9 +122,9 @@ export default async function DokaPage() {
         <Container>
           <Reveal>
             <div className="rule-strong pt-8">
-              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Pricing</p>
-              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">Per shop, per month.</h2>
-              <p className="mt-3 text-[16px] text-muted">Change or cancel any time. Prices are set by Zogal and shown here as they stand.</p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">{str(c, 'pricing.eyebrow')}</p>
+              <h2 className="mt-3 text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">{str(c, 'pricing.title')}</h2>
+              <p className="mt-3 text-[16px] text-muted">{str(c, 'pricing.body')}</p>
             </div>
           </Reveal>
           <div className="mt-10"><Pricing plans={plans} onDark={false} /></div>
@@ -157,10 +135,10 @@ export default async function DokaPage() {
         <Container>
           <Reveal>
             <div className="rule-strong pt-8">
-              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">Questions</p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-action">{str(c, 'faq.eyebrow')}</p>
             </div>
             <dl className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-2">
-              {FAQS.map(([q, a]) => (
+              {pairs(c, 'faq.items').map(([q, a]) => (
                 <div key={q} className="rule pt-5">
                   <dt className="text-[17px] font-extrabold tracking-[-0.01em] text-forest">{q}</dt>
                   <dd className="mt-2 text-[15px] leading-relaxed text-muted">{a}</dd>
@@ -168,8 +146,22 @@ export default async function DokaPage() {
               ))}
             </dl>
             <div className="mt-14 flex flex-wrap items-center gap-3">
-              <LeafButton href={APP_URL} size="lg">Start with Doka <IconArrowRight size={18} /></LeafButton>
-              <span className="text-[14px] text-muted">or <a href="#download" className="font-semibold text-forest underline">get Doka for your computer</a> first</span>
+              <LeafButton href={APP_URL} size="lg">{str(c, 'end.cta')} <IconArrowRight size={18} /></LeafButton>
+              <a href="#download" className="text-[14px] font-semibold text-forest underline">{str(c, 'end.aside')}</a>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
+      <section id="contact" className="pb-24 sm:pb-32">
+        <Container>
+          <Reveal>
+            <div className="rule-strong grid gap-10 pt-8 md:grid-cols-[0.8fr_1.2fr]">
+              <div>
+                <h2 className="text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em] text-forest sm:text-[48px]">{str(c, 'contact.title')}</h2>
+                <p className="mt-3 max-w-[380px] text-[16px] text-muted">{str(c, 'contact.body')}</p>
+              </div>
+              <ContactForm product="doka" source="doka" button={str(c, 'contact.button')} thanks={str(c, 'contact.thanks')} />
             </div>
           </Reveal>
         </Container>

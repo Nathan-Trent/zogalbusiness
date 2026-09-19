@@ -5,7 +5,7 @@ import { Leaf } from './Leaf'
 import { LeafField } from './motion'
 import { APP_URL, CONTACT_EMAIL, DOWNLOAD_URL } from '@/lib/site'
 
-export function Footer() {
+export function Footer({ blurb = 'Software for Nigerian businesses that would rather know than guess. A Zogal company.', made = 'Doka by Zogal · made in Lagos' }: { blurb?: string; made?: string }) {
   return (
     <footer className="band mt-24">
       <LeafField>
@@ -15,7 +15,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Wordmark tone="white" />
-            <p className="mt-4 max-w-[360px] text-[16px] leading-relaxed text-white/75">Software for Nigerian businesses that would rather know than guess. A Zogal company.</p>
+            <p className="mt-4 max-w-[360px] text-[16px] leading-relaxed text-white/75">{blurb}</p>
           </div>
           <div>
             <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-signal">Products</p>
@@ -39,7 +39,7 @@ export function Footer() {
         </div>
         <div className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-white/50">
           <span>© {new Date().getFullYear()} Zogal</span>
-          <span>Doka by Zogal · made in Lagos</span>
+          <span>{made}</span>
         </div>
       </Container>
     </footer>
