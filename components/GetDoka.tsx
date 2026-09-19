@@ -63,6 +63,12 @@ export function GetDoka({ installers, version, page }: { installers: Installer[]
         ) : null}
         Installs once, updates itself.
       </p>
+      {os.startsWith('mac') && (
+        <p className="mt-2 text-[12.5px] text-muted">
+          {/* Until the Mac build is signed with Apple, Gatekeeper calls it "damaged". Honest note rather than a surprise. */}
+          Mac: if it says “Doka is damaged”, it isn’t — the Mac build is not yet registered with Apple. Open Terminal and run <code className="rounded bg-black/5 px-1">xattr -cr /Applications/Doka.app</code> once, then open it normally.
+        </p>
+      )}
     </div>
   )
 }
